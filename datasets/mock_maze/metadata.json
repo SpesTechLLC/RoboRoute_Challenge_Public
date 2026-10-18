@@ -1,0 +1,11 @@
+{
+  "format_version": 1,
+  "width": 101,
+  "height": 101,
+  "query_count": 120,
+  "seed": 2026101804,
+  "map_type": "maze",
+  "query_type": "long_distance",
+  "public": true,
+  "purpose": "mock_maze"
+}

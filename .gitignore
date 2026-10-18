@@ -1,0 +1,13 @@
+# Your experiments, measurements and submissions
+work/
+results/
+submissions/
+output.txt
+# Python/editor files
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.vscode/
+.idea/
+.DS_Store

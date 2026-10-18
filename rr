@@ -1,0 +1,6 @@
+#!/usr/bin/python3
+"""Single entry point for the RoboRoute workshop."""
+from tools.rr_cli import main
+
+if __name__ == '__main__':
+    raise SystemExit(main())

@@ -1,0 +1,11 @@
+{
+  "format_version": 1,
+  "width": 150,
+  "height": 150,
+  "query_count": 400,
+  "seed": 2026101802,
+  "map_type": "open",
+  "query_type": "repeated_goal",
+  "public": true,
+  "purpose": "performance"
+}
