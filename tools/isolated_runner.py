@@ -12,6 +12,7 @@ import math
 import os
 from pathlib import Path
 import resource
+import select
 import shutil
 import signal
 import subprocess
@@ -22,6 +23,8 @@ import uuid
 
 MIB = 1024 * 1024
 STARTUP_SECONDS = 10
+# A teardown grace period, not a submission runtime limit. All of it is timed.
+EXIT_GRACE_SECONDS = .2
 
 # -I -S prevents importing submission/site modules before the readiness signal.
 # The readiness FD is closed before student code is loaded, so it cannot forge it.
@@ -56,6 +59,7 @@ class RunResult:
     stderr: str
     memory_events: dict[str, int]
     mechanism: str = 'cgroup-v2+namespace'
+    cgroup_diagnostics: dict | None = None
 
     def as_dict(self):
         return asdict(self)
@@ -95,6 +99,82 @@ def _delegated_parent():
 
 def _populated(group):
     return dict(line.split() for line in (group / 'cgroup.events').read_text().splitlines())['populated'] == '1'
+
+
+def _cgroup_snapshot(group, parent_reaped):
+    """Best-effort host diagnostics: processes may disappear during any read."""
+    snapshot = {'seconds_after_parent_reap': time.perf_counter() - parent_reaped}
+    for name in ('cgroup.events', 'cgroup.procs'):
+        try:
+            snapshot[name] = (group / name).read_text()
+        except OSError as error:
+            snapshot[name] = {'error': str(error)}
+    processes = []
+    procs = snapshot['cgroup.procs']
+    for value in procs.split() if isinstance(procs, str) else ():
+        pid = int(value)
+        record = {'pid': pid}
+        try:
+            stat = Path(f'/proc/{pid}/stat').read_text()
+            # comm can contain spaces and parentheses; fields after its last ')'
+            # start at field 3 (state). Keep CPU counters to diagnose live work.
+            fields = stat[stat.rfind(')') + 2:].split()
+            record.update(comm=stat[stat.find('(') + 1:stat.rfind(')')],
+                          state=fields[0], ppid=int(fields[1]),
+                          utime_ticks=int(fields[11]), stime_ticks=int(fields[12]),
+                          starttime_ticks=int(fields[19]))
+            record['wchan'] = Path(f'/proc/{pid}/wchan').read_text().strip()
+        except OSError as error:
+            record['error'] = str(error)
+        processes.append(record)
+    snapshot['processes'] = processes
+    return snapshot
+
+
+def _wait_for_empty(group, *, started, parent_reaped, safety_stop):
+    """Wait for cgroup teardown, waking on populated changes or the deadline.
+
+    bubblewrap's monitor can return the payload status via eventfd before its
+    namespace init finishes exiting (bubblewrap.c: monitor_child/do_init).
+    wait4 only reaps that monitor. Never accept a populated group
+    at the deadline, even when cgroup.procs happens to be empty.
+    """
+    deadline = parent_reaped + EXIT_GRACE_SECONDS
+    stopped = False
+    with (group / 'cgroup.events').open() as events:
+        poller = select.poll()
+        poller.register(events, select.POLLPRI | select.POLLERR)
+
+        def populated():
+            # Reading this same FD also acknowledges cgroup notifications.
+            events.seek(0)
+            return dict(line.split() for line in events)['populated'] == '1'
+
+        if not populated():
+            return False, False, None
+        diagnostics = {'cgroup': str(group), 'grace_seconds': EXIT_GRACE_SECONDS,
+                       'initial_populated': True,
+                       'parent_elapsed_seconds': parent_reaped - started,
+                       'snapshots': [_cgroup_snapshot(group, parent_reaped)]}
+        while True:
+            remaining = deadline - time.perf_counter()
+            if safety_stop is not None:
+                remaining = min(remaining, started + safety_stop - time.perf_counter())
+            if remaining > 0:
+                poller.poll(math.ceil(remaining * 1000))
+            occupied = populated()
+            now = time.perf_counter()
+            # A running descendant also remains subject to the operator stop.
+            if safety_stop is not None and now - started >= safety_stop:
+                stopped = True
+                (group / 'cgroup.kill').write_text('1')
+            if not occupied or stopped or now >= deadline:
+                break
+        diagnostics.update(drain_seconds=now - parent_reaped,
+                           decision_elapsed_seconds=now - started,
+                           outcome='operator_stop' if stopped else 'deadline' if occupied else 'drained')
+        diagnostics['snapshots'].append(_cgroup_snapshot(group, parent_reaped))
+        return occupied, stopped, diagnostics
 
 
 def _cleanup_group(group):
@@ -251,6 +331,7 @@ def _execute(command, group, info, stdout, stderr, ready_read, ready_write, *, s
             waited, status, usage = os.wait4(pid, os.WNOHANG)
             if waited:
                 pid = None  # already reaped
+                parent_reaped = time.perf_counter()
                 break
             elapsed = time.perf_counter() - started
             if not ready and elapsed > STARTUP_SECONDS:
@@ -266,7 +347,12 @@ def _execute(command, group, info, stdout, stderr, ready_read, ready_write, *, s
                 ready = os.read(ready_read, 2) == b'R'
             except BlockingIOError:
                 pass
-        return status, usage, time.perf_counter() - started, ready, stopped, startup_failed
+        populated, drain_stopped, diagnostics = _wait_for_empty(
+            group, started=started, parent_reaped=parent_reaped, safety_stop=safety_stop)
+        if diagnostics is not None:
+            diagnostics['parent_pid'] = waited
+        return (status, usage, time.perf_counter() - started, ready,
+                stopped or drain_stopped, startup_failed, populated, diagnostics)
     except BaseException:
         if pid is not None:
             _terminate_and_reap(pid, group)
@@ -294,7 +380,7 @@ def _classify(*, ready, stopped, startup_failed, events, populated, returncode, 
 
 
 def run_isolated(program, entry, dataset, *, memory_mib, safety_stop=None, output_limit=MIB):
-    """Measure full process elapsed; optional safety_stop is NOT a competition limit."""
+    """Measure through cgroup drain; safety_stop is NOT a competition limit."""
     program, dataset, entry = Path(program).resolve(), Path(dataset).resolve(), Path(entry)
     resolved_entry = (program / entry).resolve()
     if not program.is_dir() or not dataset.is_dir():
@@ -314,7 +400,7 @@ def run_isolated(program, entry, dataset, *, memory_mib, safety_stop=None, outpu
         ready_read, ready_write = os.pipe()
         try:
             command = _bubblewrap(program, Path(input_dir), entry, info.fileno(), ready_write)
-            status, usage, elapsed, ready, stopped, startup_failed = _execute(
+            status, usage, elapsed, ready, stopped, startup_failed, populated, diagnostics = _execute(
                 command, group, info, stdout, stderr, ready_read, ready_write,
                 safety_stop=safety_stop, output_limit=output_limit)
         finally:
@@ -332,8 +418,9 @@ def run_isolated(program, entry, dataset, *, memory_mib, safety_stop=None, outpu
         err = os.pread(stderr.fileno(), output_limit, 0).decode('utf-8', errors='replace')
         try:
             state = _classify(ready=ready, stopped=stopped, startup_failed=startup_failed,
-                              events=events, populated=_populated(group), returncode=returncode,
+                              events=events, populated=populated, returncode=returncode,
                               output_size=output_size, output_limit=output_limit)
         except EnvironmentUnavailable as error:
             raise EnvironmentUnavailable(f'{error} {err[:1000]}') from error
-        return RunResult(state, elapsed, peak, usage.ru_maxrss / 1024, memory_mib, returncode, out, err, events)
+        return RunResult(state, elapsed, peak, usage.ru_maxrss / 1024, memory_mib, returncode, out, err, events,
+                         cgroup_diagnostics=diagnostics)
