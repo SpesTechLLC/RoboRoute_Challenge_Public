@@ -1,0 +1,261 @@
+{
+  "schema_version": 2,
+  "kind": "benchmark-measurement",
+  "scoring_method": "team-median-v1",
+  "team_id": "TRUSTED_REFERENCE_BFS_CALIBRATION_ONLY",
+  "status": "COMPLETE",
+  "memory_limit_mib": 128,
+  "environment": {
+    "python": "3.14.4 (main, Jun 18 2026, 14:25:02) [GCC 15.2.0]",
+    "executable": "/usr/bin/python3.14",
+    "kernel": "6.6.87.2-microsoft-standard-WSL2"
+  },
+  "repetitions": 5,
+  "python": "3.14.4 (main, Jun 18 2026, 14:25:02) [GCC 15.2.0]",
+  "executable": "/usr/bin/python3",
+  "program_sha256": {
+    "main.py": "a4475d84b726fc7bcb478b16fd6c5b63b59ecd603a64470a156ae7027b62da87",
+    "roboroute/__init__.py": "934ba5a6ba7792eb70ee53a7de39d0d871c861169b073fb0eb5ea84e4169e43a",
+    "roboroute/dataset.py": "76a37423280f817f1e34947e62fceab01657b269f101d7f8bd730b6bf4b6b04b",
+    "roboroute/generator.py": "599824d8bece844179b4581ad0e4d6873bc4d2e2882be843d3ba3836aa70f8dc",
+    "roboroute/solver.py": "6edaa7fd96055b1f672805241c577f1ac185c25e9dcf2c654146d2c6cce31be8",
+    "roboroute/visualization.py": "ee5c23c3f4de192ee399e0071817e5b7192ddc8e0c1424168b953c096cb1ede2",
+    "solution/main.py": "e65f02560d2e6983e28b2c6109aaedf7ca6f7846eb0013dd7f181e08d2ba89bd"
+  },
+  "datasets": [
+    {
+      "dataset_id": "stress_open_unique_100x100_q24",
+      "dataset": "/home/yoshiko/RoboRoute_Challenge_Public/results/stress_100x100/stress_open_unique_100x100_q24",
+      "sha256": {
+        "map.csv": "b86dc4a45a1dc4e7c903b2a13a6448669c1b7226d1524d257cdb50d5bf54b8d0",
+        "queries.csv": "ee011390469b5c95971af29cb4959679ba6ff9ac92b8ac7f4e38e59e25c1cb29",
+        "metadata.json": "5b464980a9c462ddcdd6b930ab3028670f42aa5f9fba023ed453fd3363beb85e"
+      },
+      "baseline": {
+        "status": "OK",
+        "runs": [
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.32236212399993747,
+            "memory_peak_mib": 8.59375,
+            "peak_rss_mib": 15.60546875,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "141\n92\n101\n117\n159\n118\n124\n157\n93\n124\n111\n124\n98\n113\n94\n94\n99\n104\n97\n117\n125\n96\n97\n92\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.3225572310000189,
+            "memory_peak_mib": 8.84375,
+            "peak_rss_mib": 15.61328125,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "141\n92\n101\n117\n159\n118\n124\n157\n93\n124\n111\n124\n98\n113\n94\n94\n99\n104\n97\n117\n125\n96\n97\n92\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.3304976730000817,
+            "memory_peak_mib": 8.62890625,
+            "peak_rss_mib": 15.61328125,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "141\n92\n101\n117\n159\n118\n124\n157\n93\n124\n111\n124\n98\n113\n94\n94\n99\n104\n97\n117\n125\n96\n97\n92\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.3131269570001223,
+            "memory_peak_mib": 8.46875,
+            "peak_rss_mib": 15.6171875,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "141\n92\n101\n117\n159\n118\n124\n157\n93\n124\n111\n124\n98\n113\n94\n94\n99\n104\n97\n117\n125\n96\n97\n92\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.3178191079998669,
+            "memory_peak_mib": 8.48828125,
+            "peak_rss_mib": 15.6171875,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "141\n92\n101\n117\n159\n118\n124\n157\n93\n124\n111\n124\n98\n113\n94\n94\n99\n104\n97\n117\n125\n96\n97\n92\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          }
+        ],
+        "median_seconds": 0.32236212399993747,
+        "memory_peak_mib": 8.84375,
+        "memory_metric": "cgroup v2 memory.peak (includes descendants, cache and tmpfs; not RSS)"
+      },
+      "team": {
+        "status": "OK",
+        "runs": [
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.21675570200000038,
+            "memory_peak_mib": 8.51953125,
+            "peak_rss_mib": 15.609375,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "141\n92\n101\n117\n159\n118\n124\n157\n93\n124\n111\n124\n98\n113\n94\n94\n99\n104\n97\n117\n125\n96\n97\n92\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.20892845499997748,
+            "memory_peak_mib": 9.12109375,
+            "peak_rss_mib": 15.61328125,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "141\n92\n101\n117\n159\n118\n124\n157\n93\n124\n111\n124\n98\n113\n94\n94\n99\n104\n97\n117\n125\n96\n97\n92\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.19573007700000744,
+            "memory_peak_mib": 8.57421875,
+            "peak_rss_mib": 15.6171875,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "141\n92\n101\n117\n159\n118\n124\n157\n93\n124\n111\n124\n98\n113\n94\n94\n99\n104\n97\n117\n125\n96\n97\n92\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.20820094099985909,
+            "memory_peak_mib": 8.55078125,
+            "peak_rss_mib": 15.6171875,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "141\n92\n101\n117\n159\n118\n124\n157\n93\n124\n111\n124\n98\n113\n94\n94\n99\n104\n97\n117\n125\n96\n97\n92\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.2039088779999929,
+            "memory_peak_mib": 8.890625,
+            "peak_rss_mib": 15.6171875,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "141\n92\n101\n117\n159\n118\n124\n157\n93\n124\n111\n124\n98\n113\n94\n94\n99\n104\n97\n117\n125\n96\n97\n92\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          }
+        ],
+        "median_seconds": 0.20820094099985909,
+        "memory_peak_mib": 9.12109375,
+        "memory_metric": "cgroup v2 memory.peak (includes descendants, cache and tmpfs; not RSS)"
+      },
+      "speedup": 1.5483221279012165
+    }
+  ],
+  "baseline_sha256": {
+    "roboroute/__init__.py": "934ba5a6ba7792eb70ee53a7de39d0d871c861169b073fb0eb5ea84e4169e43a",
+    "roboroute/dataset.py": "76a37423280f817f1e34947e62fceab01657b269f101d7f8bd730b6bf4b6b04b",
+    "roboroute/generator.py": "599824d8bece844179b4581ad0e4d6873bc4d2e2882be843d3ba3836aa70f8dc",
+    "roboroute/solver.py": "6edaa7fd96055b1f672805241c577f1ac185c25e9dcf2c654146d2c6cce31be8",
+    "roboroute/visualization.py": "ee5c23c3f4de192ee399e0071817e5b7192ddc8e0c1424168b953c096cb1ede2",
+    "solution/main.py": "e65f02560d2e6983e28b2c6109aaedf7ca6f7846eb0013dd7f181e08d2ba89bd"
+  }
+}

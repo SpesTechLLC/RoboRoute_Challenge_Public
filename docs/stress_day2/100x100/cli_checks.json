@@ -1,0 +1,28 @@
+{
+  "command": "./rr check --dataset NAME",
+  "work_unchanged": true,
+  "checks": [
+    {
+      "dataset": "stress_open_unique_100x100_q2000",
+      "status": "OK",
+      "sha256": {
+        "map.csv": "b86dc4a45a1dc4e7c903b2a13a6448669c1b7226d1524d257cdb50d5bf54b8d0",
+        "queries.csv": "b72c2742a8c5469025adf62e683c7c500896309c87a120cdb0aea23f832d13c9",
+        "metadata.json": "091e6e9d401ba6e85d175a8d7bfa300556e926f874457a87063b49921139e31a"
+      },
+      "mechanism": "cgroup-v2+namespace",
+      "memory_limit_mib": 128
+    },
+    {
+      "dataset": "stress_detour_100x100_q2000",
+      "status": "OK",
+      "sha256": {
+        "map.csv": "d368c5eb36bd6e703c8a98ef950bbf7c98229185610217d7d21e2d6a089e1f38",
+        "queries.csv": "31b722563e66bcceee7a40c34f88df1cef9608de7d4e0f5d00195fe557ad7909",
+        "metadata.json": "1994f55d37a194b80ee4debf360a8427722accfb64530d75783411a4c08a49d7"
+      },
+      "mechanism": "cgroup-v2+namespace",
+      "memory_limit_mib": 128
+    }
+  ]
+}

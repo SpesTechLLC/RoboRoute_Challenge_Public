@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "dataset": "/home/yoshiko/RoboRoute_Challenge_Public/results/stress_100x100/stress_detour_100x100_q2000",
+  "config": {
+    "version": 1,
+    "kind": "stress_detour",
+    "width": 100,
+    "height": 100,
+    "queries": 2000,
+    "seed": 2026102512,
+    "profile": "public"
+  },
+  "constraints": {
+    "loader_limits_metadata_endpoints": true,
+    "independent_oracle": true,
+    "component_reachability": true,
+    "manhattan_lower_bound_parity": true,
+    "byte_reproduction": true,
+    "sufficient_detours": true
+  },
+  "width": 100,
+  "height": 100,
+  "query_count": 2000,
+  "obstacle_fraction": 0.0115,
+  "free_cells": 9885,
+  "component_count": 2,
+  "component_sizes": [
+    9821,
+    64
+  ],
+  "reachable": 1700,
+  "unreachable": 300,
+  "same_cell": 0,
+  "unique_starts": 754,
+  "unique_goals": 756,
+  "start_duplicate_fraction": 0.623,
+  "goal_duplicate_fraction": 0.622,
+  "endpoint_duplicate_fraction": 0.7685,
+  "repeated_pairs": 9,
+  "manhattan": {
+    "min": 3,
+    "median": 22.0,
+    "max": 186,
+    "mean": 35.452
+  },
+  "distance_reachable": {
+    "min": 137,
+    "median": 174.0,
+    "max": 209,
+    "mean": 173.94294117647058
+  },
+  "excess_reachable": {
+    "min": 132,
+    "median": 150.0,
+    "max": 196,
+    "mean": 153.0329411764706
+  },
+  "ratio_reachable_nonzero": {
+    "min": 3.693877551020408,
+    "median": 8.789473684210526,
+    "max": 66.33333333333333,
+    "mean": 10.193740198662665
+  },
+  "detour_count": 1700,
+  "substantial_detour_count": 1700,
+  "substantial_detour_definition": "distance - Manhattan >= height//2 AND distance >= 2*Manhattan",
+  "branching_cells": 9874,
+  "file_bytes": {
+    "map.csv": 20100,
+    "queries.csv": 24606,
+    "metadata.json": 286
+  },
+  "sha256": {
+    "map.csv": "d368c5eb36bd6e703c8a98ef950bbf7c98229185610217d7d21e2d6a089e1f38",
+    "queries.csv": "31b722563e66bcceee7a40c34f88df1cef9608de7d4e0f5d00195fe557ad7909",
+    "metadata.json": "1994f55d37a194b80ee4debf360a8427722accfb64530d75783411a4c08a49d7"
+  },
+  "answers_sha256": "1d5306006f4788d7b68ec66b37bff626dbed57d6db7f1186f1ba1c823b8a638d",
+  "generator_sha256": "cabb90e468f1729ecd104d0df280e450304041f6171fc244bbcad217004a258b",
+  "python": "3.14.4 (main, Jun 18 2026, 14:25:02) [GCC 15.2.0]"
+}

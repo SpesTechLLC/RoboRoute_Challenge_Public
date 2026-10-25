@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "dataset": "/home/yoshiko/RoboRoute_Challenge_Public/results/stress_100x100/stress_open_unique_100x100_q2000",
+  "config": {
+    "version": 1,
+    "kind": "stress_open_unique",
+    "width": 100,
+    "height": 100,
+    "queries": 2000,
+    "seed": 2026102511,
+    "profile": "public"
+  },
+  "constraints": {
+    "loader_limits_metadata_endpoints": true,
+    "independent_oracle": true,
+    "component_reachability": true,
+    "manhattan_lower_bound_parity": true,
+    "byte_reproduction": true,
+    "unique_endpoints_and_long_queries": true,
+    "connected_open_map": true
+  },
+  "width": 100,
+  "height": 100,
+  "query_count": 2000,
+  "obstacle_fraction": 0.01,
+  "free_cells": 9900,
+  "component_count": 1,
+  "component_sizes": [
+    9900
+  ],
+  "reachable": 2000,
+  "unreachable": 0,
+  "same_cell": 0,
+  "unique_starts": 2000,
+  "unique_goals": 2000,
+  "start_duplicate_fraction": 0.0,
+  "goal_duplicate_fraction": 0.0,
+  "endpoint_duplicate_fraction": 0.12075000000000002,
+  "repeated_pairs": 0,
+  "manhattan": {
+    "min": 90,
+    "median": 106.0,
+    "max": 191,
+    "mean": 110.6895
+  },
+  "distance_reachable": {
+    "min": 90,
+    "median": 106.0,
+    "max": 191,
+    "mean": 110.6895
+  },
+  "excess_reachable": {
+    "min": 0,
+    "median": 0.0,
+    "max": 0,
+    "mean": 0.0
+  },
+  "ratio_reachable_nonzero": {
+    "min": 1.0,
+    "median": 1.0,
+    "max": 1.0,
+    "mean": 1.0
+  },
+  "detour_count": 0,
+  "substantial_detour_count": 0,
+  "substantial_detour_definition": "distance - Manhattan >= height//2 AND distance >= 2*Manhattan",
+  "branching_cells": 9876,
+  "file_bytes": {
+    "map.csv": 20100,
+    "queries.csv": 24832,
+    "metadata.json": 291
+  },
+  "sha256": {
+    "map.csv": "b86dc4a45a1dc4e7c903b2a13a6448669c1b7226d1524d257cdb50d5bf54b8d0",
+    "queries.csv": "b72c2742a8c5469025adf62e683c7c500896309c87a120cdb0aea23f832d13c9",
+    "metadata.json": "091e6e9d401ba6e85d175a8d7bfa300556e926f874457a87063b49921139e31a"
+  },
+  "answers_sha256": "c2d5d6616ab1f8a88798a26240acbd9be776d23397c59c30ef7b9e65bc554227",
+  "generator_sha256": "cabb90e468f1729ecd104d0df280e450304041f6171fc244bbcad217004a258b",
+  "python": "3.14.4 (main, Jun 18 2026, 14:25:02) [GCC 15.2.0]"
+}
