@@ -1,0 +1,5 @@
+# Preserve the measured/generated input bytes, including csv.writer's CRLF.
+# Scope this to the new stress inputs; existing datasets keep their attributes.
+datasets/stress_*/map.csv -text whitespace=cr-at-eol
+datasets/stress_*/queries.csv -text whitespace=cr-at-eol
+datasets/stress_*/metadata.json -text

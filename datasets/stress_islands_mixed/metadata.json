@@ -1,0 +1,16 @@
+{
+  "format_version": 1,
+  "width": 241,
+  "height": 221,
+  "query_count": 947,
+  "seed": 2026102504,
+  "stress_generator": {
+    "version": 1,
+    "kind": "stress_islands_mixed",
+    "width": 241,
+    "height": 221,
+    "queries": 947,
+    "seed": 2026102504,
+    "profile": "public"
+  }
+}

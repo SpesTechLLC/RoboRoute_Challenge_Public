@@ -1,0 +1,49 @@
+{
+  "command": "./rr check --dataset NAME (existing work/, unchanged)",
+  "checks": [
+    {
+      "dataset": "stress_open_unique",
+      "status": "OK",
+      "mechanism": "cgroup-v2+namespace",
+      "memory_limit_mib": 128,
+      "sha256": {
+        "map.csv": "1f54e642c9c35c9e86c154ef1423cedfed10c8bbe6ab0e5b3647b04d4a4474bf",
+        "queries.csv": "b54a816ce7fc1ab8aaf3eefbfb7715031252dc802f2fb29488bc5475c25b09bf",
+        "metadata.json": "d906566b76807267f8027cb44c69100e11d3537e0d576db62a37f0e9831174a7"
+      }
+    },
+    {
+      "dataset": "stress_detour",
+      "status": "OK",
+      "mechanism": "cgroup-v2+namespace",
+      "memory_limit_mib": 128,
+      "sha256": {
+        "map.csv": "d2537a909367331b3015a82aeace95e4e8095581feb0296e5679f8251ba20c29",
+        "queries.csv": "8ba8d2741a7d4099fb1d4925e49fbc9a19d92bf8a5eec52a9b73afd59ce423c8",
+        "metadata.json": "f56d71951ab65582e5d4a63109b872e6c48c9a786d893c5c18102761f5be6fad"
+      }
+    },
+    {
+      "dataset": "stress_maze_long",
+      "status": "OK",
+      "mechanism": "cgroup-v2+namespace",
+      "memory_limit_mib": 128,
+      "sha256": {
+        "map.csv": "353857f38436308be27f61f060ea2ff792edba1dd841325fd28814022b8e5e72",
+        "queries.csv": "b6657c8346d048bed7911303efc6cd6d2e79933755fe2a4dc590962b16d53b4e",
+        "metadata.json": "9b33250a656caa6645aec3f590238183fd4d4e5f0d43dc5d201711cbbc4a4177"
+      }
+    },
+    {
+      "dataset": "stress_islands_mixed",
+      "status": "OK",
+      "mechanism": "cgroup-v2+namespace",
+      "memory_limit_mib": 128,
+      "sha256": {
+        "map.csv": "5499c3ae4ff9b9145331290cfe56ff06555fa5e2080545065a143767f1f1bd2c",
+        "queries.csv": "c866c540ba9057d8716c11e8ed2da983582fd6f7c02ba31f4cdbf8220248b1a9",
+        "metadata.json": "68e2208cc91209ddd905e9b74db8d282fd9516102ec6bc44f98ac80d1e1378fe"
+      }
+    }
+  ]
+}

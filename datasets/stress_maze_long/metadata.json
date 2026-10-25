@@ -1,0 +1,16 @@
+{
+  "format_version": 1,
+  "width": 251,
+  "height": 251,
+  "query_count": 563,
+  "seed": 2026102503,
+  "stress_generator": {
+    "version": 1,
+    "kind": "stress_maze_long",
+    "width": 251,
+    "height": 251,
+    "queries": 563,
+    "seed": 2026102503,
+    "profile": "public"
+  }
+}

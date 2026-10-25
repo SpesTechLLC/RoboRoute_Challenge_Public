@@ -1,0 +1,16 @@
+{
+  "format_version": 1,
+  "width": 181,
+  "height": 181,
+  "query_count": 359,
+  "seed": 2026102501,
+  "stress_generator": {
+    "version": 1,
+    "kind": "stress_open_unique",
+    "width": 181,
+    "height": 181,
+    "queries": 359,
+    "seed": 2026102501,
+    "profile": "public"
+  }
+}

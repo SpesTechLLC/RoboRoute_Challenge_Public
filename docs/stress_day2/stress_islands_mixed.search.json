@@ -1,0 +1,208 @@
+{
+  "dataset": "stress_islands_mixed",
+  "metric": "popped/expanded cells; bidirectional BFS completes meeting layer",
+  "notes": "Operation counts only. No component precheck/cache. A* ties use (f,g,flat_index). Not runtime rankings.",
+  "sampling": "16 reachable distance quantiles (or fewer) + first 4 unreachable queries",
+  "rows": [
+    {
+      "query_index": 8,
+      "expected": 0,
+      "expansions": {
+        "bfs": 1,
+        "bidirectional_bfs": 1,
+        "astar": 1
+      }
+    },
+    {
+      "query_index": 880,
+      "expected": 14,
+      "expansions": {
+        "bfs": 355,
+        "bidirectional_bfs": 161,
+        "astar": 54
+      }
+    },
+    {
+      "query_index": 511,
+      "expected": 27,
+      "expansions": {
+        "bfs": 1382,
+        "bidirectional_bfs": 668,
+        "astar": 28
+      }
+    },
+    {
+      "query_index": 406,
+      "expected": 35,
+      "expansions": {
+        "bfs": 2045,
+        "bidirectional_bfs": 997,
+        "astar": 285
+      }
+    },
+    {
+      "query_index": 675,
+      "expected": 43,
+      "expansions": {
+        "bfs": 3122,
+        "bidirectional_bfs": 1736,
+        "astar": 196
+      }
+    },
+    {
+      "query_index": 323,
+      "expected": 51,
+      "expansions": {
+        "bfs": 3941,
+        "bidirectional_bfs": 1679,
+        "astar": 638
+      }
+    },
+    {
+      "query_index": 185,
+      "expected": 59,
+      "expansions": {
+        "bfs": 6883,
+        "bidirectional_bfs": 3241,
+        "astar": 565
+      }
+    },
+    {
+      "query_index": 732,
+      "expected": 65,
+      "expansions": {
+        "bfs": 6505,
+        "bidirectional_bfs": 3374,
+        "astar": 307
+      }
+    },
+    {
+      "query_index": 579,
+      "expected": 73,
+      "expansions": {
+        "bfs": 8049,
+        "bidirectional_bfs": 4845,
+        "astar": 410
+      }
+    },
+    {
+      "query_index": 676,
+      "expected": 81,
+      "expansions": {
+        "bfs": 6270,
+        "bidirectional_bfs": 3906,
+        "astar": 1699
+      }
+    },
+    {
+      "query_index": 782,
+      "expected": 89,
+      "expansions": {
+        "bfs": 9568,
+        "bidirectional_bfs": 7051,
+        "astar": 1769
+      }
+    },
+    {
+      "query_index": 803,
+      "expected": 98,
+      "expansions": {
+        "bfs": 11693,
+        "bidirectional_bfs": 8469,
+        "astar": 2000
+      }
+    },
+    {
+      "query_index": 693,
+      "expected": 106,
+      "expansions": {
+        "bfs": 12393,
+        "bidirectional_bfs": 8903,
+        "astar": 2773
+      }
+    },
+    {
+      "query_index": 899,
+      "expected": 118,
+      "expansions": {
+        "bfs": 8724,
+        "bidirectional_bfs": 7184,
+        "astar": 3533
+      }
+    },
+    {
+      "query_index": 64,
+      "expected": 136,
+      "expansions": {
+        "bfs": 8807,
+        "bidirectional_bfs": 8247,
+        "astar": 4540
+      }
+    },
+    {
+      "query_index": 58,
+      "expected": 191,
+      "expansions": {
+        "bfs": 15148,
+        "bidirectional_bfs": 14622,
+        "astar": 8857
+      }
+    },
+    {
+      "query_index": 0,
+      "expected": -1,
+      "expansions": {
+        "bfs": 13046,
+        "bidirectional_bfs": 15765,
+        "astar": 13046
+      }
+    },
+    {
+      "query_index": 2,
+      "expected": -1,
+      "expansions": {
+        "bfs": 15943,
+        "bidirectional_bfs": 17298,
+        "astar": 15943
+      }
+    },
+    {
+      "query_index": 4,
+      "expected": -1,
+      "expansions": {
+        "bfs": 13046,
+        "bidirectional_bfs": 12506,
+        "astar": 13046
+      }
+    },
+    {
+      "query_index": 5,
+      "expected": -1,
+      "expansions": {
+        "bfs": 15943,
+        "bidirectional_bfs": 21561,
+        "astar": 15943
+      }
+    }
+  ],
+  "summaries": {
+    "bfs": {
+      "min": 1,
+      "median": 8386.5,
+      "max": 15943,
+      "mean": 8143.2
+    },
+    "bidirectional_bfs": {
+      "min": 1,
+      "median": 5948.0,
+      "max": 21561,
+      "mean": 7110.7
+    },
+    "astar": {
+      "min": 1,
+      "median": 1734.0,
+      "max": 15943,
+      "mean": 4281.65
+    }
+  }
+}

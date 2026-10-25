@@ -1,0 +1,208 @@
+{
+  "dataset": "stress_detour",
+  "metric": "popped/expanded cells; bidirectional BFS completes meeting layer",
+  "notes": "Operation counts only. No component precheck/cache. A* ties use (f,g,flat_index). Not runtime rankings.",
+  "sampling": "16 reachable distance quantiles (or fewer) + first 4 unreachable queries",
+  "rows": [
+    {
+      "query_index": 23,
+      "expected": 249,
+      "expansions": {
+        "bfs": 23316,
+        "bidirectional_bfs": 23013,
+        "astar": 12157
+      }
+    },
+    {
+      "query_index": 292,
+      "expected": 270,
+      "expansions": {
+        "bfs": 23582,
+        "bidirectional_bfs": 22655,
+        "astar": 13451
+      }
+    },
+    {
+      "query_index": 443,
+      "expected": 277,
+      "expansions": {
+        "bfs": 24318,
+        "bidirectional_bfs": 24538,
+        "astar": 12581
+      }
+    },
+    {
+      "query_index": 418,
+      "expected": 287,
+      "expansions": {
+        "bfs": 23860,
+        "bidirectional_bfs": 22022,
+        "astar": 12679
+      }
+    },
+    {
+      "query_index": 124,
+      "expected": 291,
+      "expansions": {
+        "bfs": 23585,
+        "bidirectional_bfs": 21923,
+        "astar": 13106
+      }
+    },
+    {
+      "query_index": 450,
+      "expected": 295,
+      "expansions": {
+        "bfs": 27503,
+        "bidirectional_bfs": 21397,
+        "astar": 13413
+      }
+    },
+    {
+      "query_index": 389,
+      "expected": 300,
+      "expansions": {
+        "bfs": 26680,
+        "bidirectional_bfs": 23211,
+        "astar": 12732
+      }
+    },
+    {
+      "query_index": 380,
+      "expected": 305,
+      "expansions": {
+        "bfs": 25953,
+        "bidirectional_bfs": 24451,
+        "astar": 12632
+      }
+    },
+    {
+      "query_index": 300,
+      "expected": 309,
+      "expansions": {
+        "bfs": 27237,
+        "bidirectional_bfs": 23150,
+        "astar": 13507
+      }
+    },
+    {
+      "query_index": 237,
+      "expected": 313,
+      "expansions": {
+        "bfs": 29010,
+        "bidirectional_bfs": 22011,
+        "astar": 14224
+      }
+    },
+    {
+      "query_index": 403,
+      "expected": 317,
+      "expansions": {
+        "bfs": 26133,
+        "bidirectional_bfs": 24140,
+        "astar": 12761
+      }
+    },
+    {
+      "query_index": 199,
+      "expected": 322,
+      "expansions": {
+        "bfs": 25104,
+        "bidirectional_bfs": 23219,
+        "astar": 13140
+      }
+    },
+    {
+      "query_index": 346,
+      "expected": 327,
+      "expansions": {
+        "bfs": 24772,
+        "bidirectional_bfs": 22663,
+        "astar": 12644
+      }
+    },
+    {
+      "query_index": 211,
+      "expected": 334,
+      "expansions": {
+        "bfs": 29178,
+        "bidirectional_bfs": 23101,
+        "astar": 13808
+      }
+    },
+    {
+      "query_index": 306,
+      "expected": 347,
+      "expansions": {
+        "bfs": 27062,
+        "bidirectional_bfs": 24592,
+        "astar": 13206
+      }
+    },
+    {
+      "query_index": 329,
+      "expected": 364,
+      "expansions": {
+        "bfs": 28042,
+        "bidirectional_bfs": 25174,
+        "astar": 13812
+      }
+    },
+    {
+      "query_index": 16,
+      "expected": -1,
+      "expansions": {
+        "bfs": 32326,
+        "bidirectional_bfs": 250,
+        "astar": 32326
+      }
+    },
+    {
+      "query_index": 25,
+      "expected": -1,
+      "expansions": {
+        "bfs": 32326,
+        "bidirectional_bfs": 266,
+        "astar": 32326
+      }
+    },
+    {
+      "query_index": 27,
+      "expected": -1,
+      "expansions": {
+        "bfs": 225,
+        "bidirectional_bfs": 286,
+        "astar": 225
+      }
+    },
+    {
+      "query_index": 40,
+      "expected": -1,
+      "expansions": {
+        "bfs": 225,
+        "bidirectional_bfs": 250,
+        "astar": 225
+      }
+    }
+  ],
+  "summaries": {
+    "bfs": {
+      "min": 225,
+      "median": 26043.0,
+      "max": 32326,
+      "mean": 24021.85
+    },
+    "bidirectional_bfs": {
+      "min": 250,
+      "median": 22838.0,
+      "max": 25174,
+      "mean": 18615.6
+    },
+    "astar": {
+      "min": 225,
+      "median": 13123.0,
+      "max": 32326,
+      "mean": 13747.75
+    }
+  }
+}

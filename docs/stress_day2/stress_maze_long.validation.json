@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "dataset": "/home/yoshiko/RoboRoute_Challenge_Public/datasets/stress_maze_long",
+  "config": {
+    "version": 1,
+    "kind": "stress_maze_long",
+    "width": 251,
+    "height": 251,
+    "queries": 563,
+    "seed": 2026102503,
+    "profile": "public"
+  },
+  "constraints": {
+    "loader_limits_metadata_endpoints": true,
+    "independent_oracle": true,
+    "component_reachability": true,
+    "manhattan_lower_bound_parity": true,
+    "byte_reproduction": true,
+    "long_winding_paths": true
+  },
+  "width": 251,
+  "height": 251,
+  "query_count": 563,
+  "obstacle_fraction": 0.5039920001269821,
+  "free_cells": 31249,
+  "component_count": 1,
+  "component_sizes": [
+    31249
+  ],
+  "reachable": 563,
+  "unreachable": 0,
+  "same_cell": 0,
+  "unique_starts": 560,
+  "unique_goals": 556,
+  "start_duplicate_fraction": 0.005328596802841923,
+  "goal_duplicate_fraction": 0.01243339253996445,
+  "endpoint_duplicate_fraction": 0.014209591474245165,
+  "repeated_pairs": 0,
+  "manhattan": {
+    "min": 167,
+    "median": 225,
+    "max": 407,
+    "mean": 236.09769094138542
+  },
+  "distance_reachable": {
+    "min": 558,
+    "median": 5028,
+    "max": 11393,
+    "mean": 5253.301953818827
+  },
+  "excess_reachable": {
+    "min": 356,
+    "median": 4816,
+    "max": 11182,
+    "mean": 5017.2042628774425
+  },
+  "ratio_reachable_nonzero": {
+    "min": 2.762376237623762,
+    "median": 20.41317365269461,
+    "max": 61.98360655737705,
+    "mean": 23.068259978143978
+  },
+  "detour_count": 563,
+  "substantial_detour_count": 563,
+  "substantial_detour_definition": "distance - Manhattan >= height//2 AND distance >= 2*Manhattan",
+  "branching_cells": 1504,
+  "file_bytes": {
+    "map.csv": 126253,
+    "queries.csv": 8565,
+    "metadata.json": 287
+  },
+  "sha256": {
+    "map.csv": "353857f38436308be27f61f060ea2ff792edba1dd841325fd28814022b8e5e72",
+    "queries.csv": "b6657c8346d048bed7911303efc6cd6d2e79933755fe2a4dc590962b16d53b4e",
+    "metadata.json": "9b33250a656caa6645aec3f590238183fd4d4e5f0d43dc5d201711cbbc4a4177"
+  },
+  "answers_sha256": "a28f22e3843461993ac21dacc0065ac403d2e9e2a890828fd9c28a3055b13c29",
+  "generator_sha256": "cabb90e468f1729ecd104d0df280e450304041f6171fc244bbcad217004a258b",
+  "python": "3.14.4 (main, Jun 18 2026, 14:25:02) [GCC 15.2.0]"
+}

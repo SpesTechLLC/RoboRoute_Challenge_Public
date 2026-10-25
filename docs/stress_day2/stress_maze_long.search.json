@@ -1,0 +1,172 @@
+{
+  "dataset": "stress_maze_long",
+  "metric": "popped/expanded cells; bidirectional BFS completes meeting layer",
+  "notes": "Operation counts only. No component precheck/cache. A* ties use (f,g,flat_index). Not runtime rankings.",
+  "sampling": "16 reachable distance quantiles (or fewer) + first 4 unreachable queries",
+  "rows": [
+    {
+      "query_index": 342,
+      "expected": 558,
+      "expansions": {
+        "bfs": 2221,
+        "bidirectional_bfs": 2354,
+        "astar": 2083
+      }
+    },
+    {
+      "query_index": 146,
+      "expected": 1895,
+      "expansions": {
+        "bfs": 4565,
+        "bidirectional_bfs": 5162,
+        "astar": 4539
+      }
+    },
+    {
+      "query_index": 501,
+      "expected": 2513,
+      "expansions": {
+        "bfs": 10024,
+        "bidirectional_bfs": 10168,
+        "astar": 9189
+      }
+    },
+    {
+      "query_index": 172,
+      "expected": 2974,
+      "expansions": {
+        "bfs": 15300,
+        "bidirectional_bfs": 11206,
+        "astar": 14361
+      }
+    },
+    {
+      "query_index": 344,
+      "expected": 3409,
+      "expansions": {
+        "bfs": 11973,
+        "bidirectional_bfs": 12322,
+        "astar": 11871
+      }
+    },
+    {
+      "query_index": 555,
+      "expected": 4006,
+      "expansions": {
+        "bfs": 18929,
+        "bidirectional_bfs": 17174,
+        "astar": 17976
+      }
+    },
+    {
+      "query_index": 174,
+      "expected": 4461,
+      "expansions": {
+        "bfs": 19922,
+        "bidirectional_bfs": 20958,
+        "astar": 19858
+      }
+    },
+    {
+      "query_index": 139,
+      "expected": 4852,
+      "expansions": {
+        "bfs": 15112,
+        "bidirectional_bfs": 16510,
+        "astar": 15112
+      }
+    },
+    {
+      "query_index": 446,
+      "expected": 5204,
+      "expansions": {
+        "bfs": 19114,
+        "bidirectional_bfs": 24366,
+        "astar": 19096
+      }
+    },
+    {
+      "query_index": 416,
+      "expected": 5607,
+      "expansions": {
+        "bfs": 25100,
+        "bidirectional_bfs": 14238,
+        "astar": 24205
+      }
+    },
+    {
+      "query_index": 252,
+      "expected": 6224,
+      "expansions": {
+        "bfs": 30272,
+        "bidirectional_bfs": 19648,
+        "astar": 29683
+      }
+    },
+    {
+      "query_index": 122,
+      "expected": 6739,
+      "expansions": {
+        "bfs": 17692,
+        "bidirectional_bfs": 29280,
+        "astar": 17669
+      }
+    },
+    {
+      "query_index": 171,
+      "expected": 7423,
+      "expansions": {
+        "bfs": 24984,
+        "bidirectional_bfs": 23988,
+        "astar": 24932
+      }
+    },
+    {
+      "query_index": 305,
+      "expected": 8083,
+      "expansions": {
+        "bfs": 22214,
+        "bidirectional_bfs": 24244,
+        "astar": 21717
+      }
+    },
+    {
+      "query_index": 320,
+      "expected": 9230,
+      "expansions": {
+        "bfs": 28584,
+        "bidirectional_bfs": 28116,
+        "astar": 28167
+      }
+    },
+    {
+      "query_index": 513,
+      "expected": 11393,
+      "expansions": {
+        "bfs": 28843,
+        "bidirectional_bfs": 29296,
+        "astar": 28815
+      }
+    }
+  ],
+  "summaries": {
+    "bfs": {
+      "min": 2221,
+      "median": 19021.5,
+      "max": 30272,
+      "mean": 18428.0625
+    },
+    "bidirectional_bfs": {
+      "min": 2354,
+      "median": 18411.0,
+      "max": 29296,
+      "mean": 18064.375
+    },
+    "astar": {
+      "min": 2083,
+      "median": 18536.0,
+      "max": 29683,
+      "mean": 18079.5625
+    }
+  }
+}

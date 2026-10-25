@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "dataset": "/home/yoshiko/RoboRoute_Challenge_Public/datasets/stress_islands_mixed",
+  "config": {
+    "version": 1,
+    "kind": "stress_islands_mixed",
+    "width": 241,
+    "height": 221,
+    "queries": 947,
+    "seed": 2026102504,
+    "profile": "public"
+  },
+  "constraints": {
+    "loader_limits_metadata_endpoints": true,
+    "independent_oracle": true,
+    "component_reachability": true,
+    "manhattan_lower_bound_parity": true,
+    "byte_reproduction": true,
+    "mixed_reachability_and_repetition": true
+  },
+  "width": 241,
+  "height": 221,
+  "query_count": 947,
+  "obstacle_fraction": 0.01849383226000263,
+  "free_cells": 52276,
+  "component_count": 4,
+  "component_sizes": [
+    15943,
+    13046,
+    12808,
+    10479
+  ],
+  "reachable": 567,
+  "unreachable": 380,
+  "same_cell": 23,
+  "unique_starts": 763,
+  "unique_goals": 763,
+  "start_duplicate_fraction": 0.19429778247096097,
+  "goal_duplicate_fraction": 0.19429778247096097,
+  "endpoint_duplicate_fraction": 0.21752903907074972,
+  "repeated_pairs": 0,
+  "manhattan": {
+    "min": 0,
+    "median": 103,
+    "max": 406,
+    "mean": 117.66842661034848
+  },
+  "distance_reachable": {
+    "min": 0,
+    "median": 68,
+    "max": 191,
+    "mean": 71.93474426807761
+  },
+  "excess_reachable": {
+    "min": 0,
+    "median": 0,
+    "max": 2,
+    "mean": 0.024691358024691357
+  },
+  "ratio_reachable_nonzero": {
+    "min": 1.0,
+    "median": 1.0,
+    "max": 1.1333333333333333,
+    "mean": 1.0006688011457543
+  },
+  "detour_count": 7,
+  "substantial_detour_count": 0,
+  "substantial_detour_definition": "distance - Manhattan >= height//2 AND distance >= 2*Manhattan",
+  "branching_cells": 52182,
+  "file_bytes": {
+    "map.csv": 106743,
+    "queries.csv": 14063,
+    "metadata.json": 291
+  },
+  "sha256": {
+    "map.csv": "5499c3ae4ff9b9145331290cfe56ff06555fa5e2080545065a143767f1f1bd2c",
+    "queries.csv": "c866c540ba9057d8716c11e8ed2da983582fd6f7c02ba31f4cdbf8220248b1a9",
+    "metadata.json": "68e2208cc91209ddd905e9b74db8d282fd9516102ec6bc44f98ac80d1e1378fe"
+  },
+  "answers_sha256": "5b178204f7f5f41475694ea5c34689025f777851230cd6b0c7afb21b55a25a54",
+  "generator_sha256": "cabb90e468f1729ecd104d0df280e450304041f6171fc244bbcad217004a258b",
+  "python": "3.14.4 (main, Jun 18 2026, 14:25:02) [GCC 15.2.0]"
+}
