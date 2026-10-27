@@ -1,0 +1,83 @@
+{
+  "checks": [
+    {
+      "label": "failures",
+      "command": [
+        "./rr",
+        "mock-stress",
+        "--lite",
+        "--work",
+        "/home/yoshiko/.codex/worktrees/mock-stress/RoboRoute_Challenge_Public/results/mock-stress-validation/failure-probe",
+        "--team",
+        "DELIBERATE_FAILURE_FIXTURE"
+      ],
+      "returncode": 1,
+      "wall_seconds": 40.82651136899949,
+      "status": "COMPLETE"
+    },
+    {
+      "label": "safety-stop",
+      "command": [
+        "./rr",
+        "mock-stress",
+        "--lite",
+        "--safety-stop",
+        "0.001"
+      ],
+      "returncode": 2,
+      "wall_seconds": 0.5434512440006074,
+      "status": "INCOMPLETE"
+    },
+    {
+      "label": "existing-check",
+      "command": [
+        "./rr",
+        "check"
+      ],
+      "returncode": 0,
+      "wall_seconds": 0.2568044910003664,
+      "status": "OK"
+    },
+    {
+      "label": "existing-bench",
+      "command": [
+        "./rr",
+        "bench"
+      ],
+      "returncode": 0,
+      "wall_seconds": 1.732885677000013,
+      "status": "COMPLETE"
+    },
+    {
+      "label": "existing-mock",
+      "command": [
+        "./rr",
+        "mock"
+      ],
+      "returncode": 0,
+      "wall_seconds": 7.34710295900004,
+      "status": "COMPLETE"
+    }
+  ],
+  "protected_paths_unchanged": [
+    "roboroute",
+    "solution",
+    "tools/benchmark.py",
+    "tools/isolated_runner.py",
+    "docs/RULES.md",
+    "datasets/sample",
+    "datasets/practice",
+    "datasets/performance",
+    "datasets/mock_rooms",
+    "datasets/mock_maze",
+    "datasets/mock_islands",
+    "datasets/stress_open_unique",
+    "datasets/stress_detour",
+    "datasets/stress_maze_long",
+    "datasets/stress_islands_mixed",
+    "datasets/stress_open_unique_100x100_q2000",
+    "datasets/stress_detour_100x100_q2000"
+  ],
+  "source_work_unchanged": true,
+  "snapshot_work_unchanged": true
+}

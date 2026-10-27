@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "kind": "stress-mock-measurement",
+  "status": "INCOMPLETE",
+  "error": "隔離ワーカーが完了していません。",
+  "datasets": [],
+  "mode": "full",
+  "aggregate_method": "geometric-mean-of-six-baseline-speedups-v1",
+  "official_score": false,
+  "summary": {
+    "status": "INCOMPLETE",
+    "valid": false,
+    "correct_datasets": 0,
+    "total_datasets": 6,
+    "geometric_mean_speedup": null,
+    "total_time_ratio": null,
+    "team_memory_peak_mib": null,
+    "reasons": [
+      "隔離ワーカーが完了していません。"
+    ]
+  }
+}

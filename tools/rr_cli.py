@@ -16,6 +16,7 @@ import zipfile
 from roboroute.dataset import load_dataset
 from tools.benchmark import ROOT, evaluate, fingerprint
 from tools.isolated_runner import EnvironmentUnavailable, delegated_parent, run_isolated
+from tools.mock_stress import display_stress, evaluate_stress, summarize
 from tools.reference_solver import solve_dataset
 from tools.submission import extract_submission, MAX_BYTES, MAX_FILES
 
@@ -176,6 +177,14 @@ def main(argv=None):
         command.add_argument('--result', type=Path)
         command.add_argument('--safety-stop', type=float)
         command.add_argument('--team')
+    stress = commands.add_parser('mock-stress', help='2日目の公開ストレス6種類を基準比で評価（180秒方式とは別）')
+    mode = stress.add_mutually_exclusive_group(required=True)
+    mode.add_argument('--lite', dest='mode', action='store_const', const='lite', help='短縮版6種類で繰り返し確認')
+    mode.add_argument('--full', dest='mode', action='store_const', const='full', help='公開ストレス6種類で最終確認')
+    stress.add_argument('--work', type=Path, default=ROOT / 'work')
+    stress.add_argument('--result', type=Path)
+    stress.add_argument('--safety-stop', type=float, help='1実行の運営上の安全停止秒数（停止時はINCOMPLETE）')
+    stress.add_argument('--team')
     pack = commands.add_parser('pack', help='新しい提出形式のZIPを作成・検査')
     pack.add_argument('--work', type=Path, default=ROOT / 'work')
     pack.add_argument('--team', required=True)
@@ -202,29 +211,48 @@ def main(argv=None):
         args.work = args.work.resolve()
         if not args.work.is_dir() or not (args.work / 'main.py').is_file():
             raise ValueError('work/main.pyがありません。先に ./rr init を実行してください。')
-        if args.command != 'mock':
+        if args.command not in ('mock', 'mock-stress'):
             args.dataset = str(dataset_path(args.dataset))
         if args.result is None:
-            args.result = ROOT / 'results' / (args.command + '-' + datetime.now().strftime('%Y%m%d-%H%M%S') + f'-{time.time_ns() % 1000000:06d}.json')
+            prefix = args.command + ('-' + args.mode if args.command == 'mock-stress' else '')
+            args.result = ROOT / 'results' / (prefix + '-' + datetime.now().strftime('%Y%m%d-%H%M%S') + f'-{time.time_ns() % 1000000:06d}.json')
         args.result = args.result.resolve()
         if not args._worker and not _inside_delegation():
             forwarded = [args.command, '--work', str(args.work), '--result', str(args.result)]
-            if args.command != 'mock':
+            if args.command not in ('mock', 'mock-stress'):
                 forwarded += ['--dataset', args.dataset]
+            if args.command == 'mock-stress':
+                forwarded += ['--' + args.mode]
             if args.safety_stop is not None:
                 forwarded += ['--safety-stop', str(args.safety_stop)]
             if args.team:
                 forwarded += ['--team', args.team]
             args.result.parent.mkdir(parents=True, exist_ok=True)
-            args.result.write_text(json.dumps({'schema_version': 2, 'kind': 'benchmark-measurement', 'status': 'INCOMPLETE', 'error': '隔離ワーカーが完了していません。'}) + '\n')
+            pending = {'schema_version': 2, 'kind': 'benchmark-measurement', 'status': 'INCOMPLETE',
+                       'error': '隔離ワーカーが完了していません。', 'datasets': []}
+            if args.command == 'mock-stress':
+                summarize(pending, args.mode)
+            args.result.write_text(json.dumps(pending, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
             code = run_service(forwarded)
-            if code == 2 or code not in (0, 1) or json.loads(args.result.read_text()).get('status') == 'INCOMPLETE':
+            saved = json.loads(args.result.read_text())
+            if code == 2 or code not in (0, 1) or saved.get('status') == 'INCOMPLETE':
                 print('隔離実行を完了できませんでした。通常WSLで ./rr を実行し、ユーザーsystemd・cgroup・bubblewrapを確認してください。無制限実行には切り替えません。', file=sys.stderr)
+                if args.command == 'mock-stress':
+                    saved.update(status='INCOMPLETE', error=saved.get('error', f'隔離ワーカーの終了コード: {code}'))
+                    summarize(saved, args.mode)
+                    args.result.write_text(json.dumps(saved, ensure_ascii=False, indent=2, allow_nan=False) + '\n', encoding='utf-8')
+                    display_stress(saved)
+                    print(f'結果JSON: {args.result}')
+                    return 2
             return code
         if args.command == 'check':
             result = _check(args.work, Path(args.dataset), args.safety_stop)
             print(f'正解判定: {result["status"]} / 上限: 128 MiB')
             code = 0 if result['status'] == 'OK' else (2 if result['status'] == 'OPERATOR_STOP' else 1)
+        elif args.command == 'mock-stress':
+            print(f'模擬本番 {args.mode.title()} を測定中: 公開6種類・基準/改善版を各5回・128 MiB隔離', flush=True)
+            result = evaluate_stress(args.work, args.mode, args.safety_stop, team_id=args.team)
+            code = display_stress(result)
         else:
             datasets = [ROOT / 'datasets' / n for n in MOCK_DATASETS] if args.command == 'mock' else [Path(args.dataset)]
             result = evaluate(args.work, 'main.py', datasets, 128, args.safety_stop, team_id=args.team)
@@ -236,7 +264,12 @@ def main(argv=None):
     except (EnvironmentUnavailable, OSError, ValueError, zipfile.BadZipFile) as error:
         if getattr(args, 'result', None) is not None:
             args.result.parent.mkdir(parents=True, exist_ok=True)
-            args.result.write_text(json.dumps({'schema_version': 2, 'kind': 'benchmark-measurement', 'status': 'INCOMPLETE', 'error': str(error)}, ensure_ascii=False) + '\n', encoding='utf-8')
+            result = {'schema_version': 2, 'kind': 'benchmark-measurement', 'status': 'INCOMPLETE',
+                      'error': str(error), 'datasets': []}
+            if args.command == 'mock-stress':
+                summarize(result, args.mode)
+                display_stress(result)
+            args.result.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         print(f'ERROR: {error}', file=sys.stderr)
         if isinstance(error, EnvironmentUnavailable):
             print('通常WSLのユーザーsystemd・cgroup・bubblewrapを確認してください。隔離なしでは実行しません。', file=sys.stderr)

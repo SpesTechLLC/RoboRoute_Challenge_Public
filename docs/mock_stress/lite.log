@@ -1,0 +1,47 @@
+Running as unit: run-r54878f7e399b4874897be9c693185031.service; invocation ID: c2da540dc2a843f4b24285a6fc84af9e
+模擬本番 Lite を測定中: 公開6種類・基準/改善版を各5回・128 MiB隔離
+模擬本番 Lite
+基準比の練習用評価（各5回中央値・128 MiB）。正式な180秒スループットの点数とは別です。
+正解: 6/6
+総合高速化率（幾何平均）: 9.91 倍
+合計時間比（参考）: 10.63 倍
+最大メモリ（改善版）: 11.12 MiB
+メモリは全測定の最大cgroup memory.peak（RSSではありません）。
+
+Dataset: stress_open_unique_lite / 正解判定: OK
+  基準中央値: 0.613300 秒 / 最大メモリ: 12.02 MiB
+  改善版中央値: 0.073900 秒 / 最大メモリ: 7.65 MiB
+  高速化率: 8.30 倍
+
+Dataset: stress_detour_lite / 正解判定: OK
+  基準中央値: 0.708115 秒 / 最大メモリ: 12.26 MiB
+  改善版中央値: 0.074975 秒 / 最大メモリ: 6.96 MiB
+  高速化率: 9.44 倍
+
+Dataset: stress_maze_long_lite / 正解判定: OK
+  基準中央値: 0.534082 秒 / 最大メモリ: 13.48 MiB
+  改善版中央値: 0.089978 秒 / 最大メモリ: 11.12 MiB
+  高速化率: 5.94 倍
+
+Dataset: stress_islands_mixed_lite / 正解判定: OK
+  基準中央値: 0.464152 秒 / 最大メモリ: 9.88 MiB
+  改善版中央値: 0.076750 秒 / 最大メモリ: 7.09 MiB
+  高速化率: 6.05 倍
+
+Dataset: stress_open_unique_100x100_q2000_lite / 正解判定: OK
+  基準中央値: 1.294932 秒 / 最大メモリ: 8.76 MiB
+  改善版中央値: 0.064756 秒 / 最大メモリ: 7.22 MiB
+  高速化率: 20.00 倍
+
+Dataset: stress_detour_100x100_q2000_lite / 正解判定: OK
+  基準中央値: 1.165434 秒 / 最大メモリ: 8.88 MiB
+  改善版中央値: 0.069426 秒 / 最大メモリ: 7.09 MiB
+  高速化率: 16.79 倍
+
+所要時間: 29.05 秒（正解生成・測定・集計を含む）
+結果JSON: /home/yoshiko/.codex/worktrees/mock-stress/RoboRoute_Challenge_Public/results/mock-stress-validation/lite.json
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 29.157s
+             CPU time consumed: 3.683s
+                   Memory peak: 18M (swap: 0B)

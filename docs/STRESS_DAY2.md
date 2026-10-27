@@ -12,6 +12,8 @@
 
 既存のwork/をそのまま使用します。通常のWSLターミナルで実行してください。
 
+6種類をまとめて確認するコマンドもあります。開発中は `./rr mock-stress --lite`、最終確認は `./rr mock-stress --full` を使います。基準比の幾何平均を表示する練習用評価で、正式な180秒スループットの点数とは別です。[詳しい使い方・実測時間](MOCK_STRESS.md)を参照してください。既存の `./rr mock` の対象3種類は変わりません。
+
 ```bash
 ./rr check --dataset stress_open_unique
 ./rr bench --dataset stress_open_unique

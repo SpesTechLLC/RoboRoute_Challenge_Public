@@ -1,0 +1,720 @@
+{
+  "schema_version": 2,
+  "kind": "benchmark-measurement",
+  "scoring_method": "team-median-v1",
+  "team_id": null,
+  "status": "COMPLETE",
+  "memory_limit_mib": 128,
+  "environment": {
+    "python": "3.14.4 (main, Jun 18 2026, 14:25:02) [GCC 15.2.0]",
+    "executable": "/usr/bin/python3.14",
+    "kernel": "6.6.87.2-microsoft-standard-WSL2"
+  },
+  "repetitions": 5,
+  "python": "3.14.4 (main, Jun 18 2026, 14:25:02) [GCC 15.2.0]",
+  "executable": "/usr/bin/python3",
+  "program_sha256": {
+    "bitmap.py": "66ca3c46473518d4232eab40c445154f677b4d127b50979588fcc3e90023a737",
+    "connectivity.py": "c3718e82df0f9000e6e5950d095ff3555495eecf2a2f674315c9e7856bfd5336",
+    "core.py": "47bb6566fb04fec1515dd2afdb497dae43a8ea95385b53f0d1db65a0230e8dd8",
+    "core_alt.py": "7dd5a62b7b2dbb3ec8cc007e35913862c7be5f25be8fcc5ff277a51d701bd72d",
+    "main.py": "8fa25c878446650ff4ede43e89e02875e411f84d95e86ee07170d364315ad363",
+    "report/experiment_log.md": "c0c0010c9a82a804d7b6840d6d4f9f0a87b5db2e12c5e355259ba54735ea625a",
+    "roboroute/__init__.py": "934ba5a6ba7792eb70ee53a7de39d0d871c861169b073fb0eb5ea84e4169e43a",
+    "roboroute/dataset.py": "76a37423280f817f1e34947e62fceab01657b269f101d7f8bd730b6bf4b6b04b",
+    "roboroute/generator.py": "599824d8bece844179b4581ad0e4d6873bc4d2e2882be843d3ba3836aa70f8dc",
+    "roboroute/solver.py": "b6e221a1e41734248323abcd225d896a3aec26aade53aa61033ca3a7c58a02e2",
+    "roboroute/visualization.py": "ee5c23c3f4de192ee399e0071817e5b7192ddc8e0c1424168b953c096cb1ede2",
+    "search.py": "481844e3f463d803c27796c46ff054c040a6351082283bbc2bfcd01e694c0b09",
+    "solver.py": "9998501df0692da2a8111d4d371c3d0e57d39a128166b7d601051c63a3513466",
+    "visibility.py": "223004c9109d5e149221f9665b3c3f2d9d46c1b4317944a8f1e022b1ba5bb7d9"
+  },
+  "datasets": [
+    {
+      "dataset_id": "mock_rooms",
+      "dataset": "/home/yoshiko/.codex/worktrees/mock-stress/RoboRoute_Challenge_Public/datasets/mock_rooms",
+      "sha256": {
+        "map.csv": "c0b8a8c1d388189e83136be7d08f3e0bf13abfb2f243c7131e7bf2e0a36d0c2b",
+        "queries.csv": "10a49a80a7c4553790c260b18c6670b59b297859d0dae442b501ae8037eb71b3",
+        "metadata.json": "7feb8d572383dd59cedaac90b839076c51bf2468afbf9f5a5341aaecbccea49c"
+      },
+      "baseline": {
+        "status": "OK",
+        "runs": [
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.40461002600022766,
+            "memory_peak_mib": 7.97265625,
+            "peak_rss_mib": 15.51171875,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "73\n44\n23\n102\n49\n11\n77\n75\n27\n37\n37\n24\n59\n77\n59\n16\n83\n89\n41\n27\n59\n95\n76\n116\n72\n76\n16\n43\n18\n19\n41\n79\n85\n16\n114\n35\n24\n71\n14\n16\n31\n99\n72\n45\n16\n47\n105\n109\n58\n28\n90\n88\n40\n78\n21\n76\n98\n100\n59\n88\n20\n10\n17\n125\n25\n40\n47\n98\n15\n80\n86\n26\n48\n61\n90\n55\n30\n112\n88\n43\n39\n35\n85\n85\n71\n97\n132\n20\n14\n18\n18\n94\n104\n88\n29\n17\n37\n16\n115\n96\n33\n28\n89\n119\n89\n12\n144\n25\n36\n18\n49\n43\n15\n41\n3\n79\n33\n98\n49\n107\n18\n73\n60\n57\n69\n86\n52\n15\n9\n34\n25\n98\n65\n129\n85\n57\n96\n114\n13\n105\n98\n117\n39\n7\n97\n25\n62\n10\n17\n11\n79\n63\n25\n25\n13\n64\n17\n86\n47\n96\n70\n74\n26\n76\n7\n118\n99\n40\n52\n70\n85\n24\n28\n27\n49\n20\n41\n81\n109\n125\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.3930841199999122,
+            "memory_peak_mib": 8.0703125,
+            "peak_rss_mib": 15.515625,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "73\n44\n23\n102\n49\n11\n77\n75\n27\n37\n37\n24\n59\n77\n59\n16\n83\n89\n41\n27\n59\n95\n76\n116\n72\n76\n16\n43\n18\n19\n41\n79\n85\n16\n114\n35\n24\n71\n14\n16\n31\n99\n72\n45\n16\n47\n105\n109\n58\n28\n90\n88\n40\n78\n21\n76\n98\n100\n59\n88\n20\n10\n17\n125\n25\n40\n47\n98\n15\n80\n86\n26\n48\n61\n90\n55\n30\n112\n88\n43\n39\n35\n85\n85\n71\n97\n132\n20\n14\n18\n18\n94\n104\n88\n29\n17\n37\n16\n115\n96\n33\n28\n89\n119\n89\n12\n144\n25\n36\n18\n49\n43\n15\n41\n3\n79\n33\n98\n49\n107\n18\n73\n60\n57\n69\n86\n52\n15\n9\n34\n25\n98\n65\n129\n85\n57\n96\n114\n13\n105\n98\n117\n39\n7\n97\n25\n62\n10\n17\n11\n79\n63\n25\n25\n13\n64\n17\n86\n47\n96\n70\n74\n26\n76\n7\n118\n99\n40\n52\n70\n85\n24\n28\n27\n49\n20\n41\n81\n109\n125\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.4255994830000418,
+            "memory_peak_mib": 8.13671875,
+            "peak_rss_mib": 15.515625,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "73\n44\n23\n102\n49\n11\n77\n75\n27\n37\n37\n24\n59\n77\n59\n16\n83\n89\n41\n27\n59\n95\n76\n116\n72\n76\n16\n43\n18\n19\n41\n79\n85\n16\n114\n35\n24\n71\n14\n16\n31\n99\n72\n45\n16\n47\n105\n109\n58\n28\n90\n88\n40\n78\n21\n76\n98\n100\n59\n88\n20\n10\n17\n125\n25\n40\n47\n98\n15\n80\n86\n26\n48\n61\n90\n55\n30\n112\n88\n43\n39\n35\n85\n85\n71\n97\n132\n20\n14\n18\n18\n94\n104\n88\n29\n17\n37\n16\n115\n96\n33\n28\n89\n119\n89\n12\n144\n25\n36\n18\n49\n43\n15\n41\n3\n79\n33\n98\n49\n107\n18\n73\n60\n57\n69\n86\n52\n15\n9\n34\n25\n98\n65\n129\n85\n57\n96\n114\n13\n105\n98\n117\n39\n7\n97\n25\n62\n10\n17\n11\n79\n63\n25\n25\n13\n64\n17\n86\n47\n96\n70\n74\n26\n76\n7\n118\n99\n40\n52\n70\n85\n24\n28\n27\n49\n20\n41\n81\n109\n125\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.3895315279996794,
+            "memory_peak_mib": 7.93359375,
+            "peak_rss_mib": 15.53515625,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "73\n44\n23\n102\n49\n11\n77\n75\n27\n37\n37\n24\n59\n77\n59\n16\n83\n89\n41\n27\n59\n95\n76\n116\n72\n76\n16\n43\n18\n19\n41\n79\n85\n16\n114\n35\n24\n71\n14\n16\n31\n99\n72\n45\n16\n47\n105\n109\n58\n28\n90\n88\n40\n78\n21\n76\n98\n100\n59\n88\n20\n10\n17\n125\n25\n40\n47\n98\n15\n80\n86\n26\n48\n61\n90\n55\n30\n112\n88\n43\n39\n35\n85\n85\n71\n97\n132\n20\n14\n18\n18\n94\n104\n88\n29\n17\n37\n16\n115\n96\n33\n28\n89\n119\n89\n12\n144\n25\n36\n18\n49\n43\n15\n41\n3\n79\n33\n98\n49\n107\n18\n73\n60\n57\n69\n86\n52\n15\n9\n34\n25\n98\n65\n129\n85\n57\n96\n114\n13\n105\n98\n117\n39\n7\n97\n25\n62\n10\n17\n11\n79\n63\n25\n25\n13\n64\n17\n86\n47\n96\n70\n74\n26\n76\n7\n118\n99\n40\n52\n70\n85\n24\n28\n27\n49\n20\n41\n81\n109\n125\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.39497516800020094,
+            "memory_peak_mib": 7.953125,
+            "peak_rss_mib": 15.53515625,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "73\n44\n23\n102\n49\n11\n77\n75\n27\n37\n37\n24\n59\n77\n59\n16\n83\n89\n41\n27\n59\n95\n76\n116\n72\n76\n16\n43\n18\n19\n41\n79\n85\n16\n114\n35\n24\n71\n14\n16\n31\n99\n72\n45\n16\n47\n105\n109\n58\n28\n90\n88\n40\n78\n21\n76\n98\n100\n59\n88\n20\n10\n17\n125\n25\n40\n47\n98\n15\n80\n86\n26\n48\n61\n90\n55\n30\n112\n88\n43\n39\n35\n85\n85\n71\n97\n132\n20\n14\n18\n18\n94\n104\n88\n29\n17\n37\n16\n115\n96\n33\n28\n89\n119\n89\n12\n144\n25\n36\n18\n49\n43\n15\n41\n3\n79\n33\n98\n49\n107\n18\n73\n60\n57\n69\n86\n52\n15\n9\n34\n25\n98\n65\n129\n85\n57\n96\n114\n13\n105\n98\n117\n39\n7\n97\n25\n62\n10\n17\n11\n79\n63\n25\n25\n13\n64\n17\n86\n47\n96\n70\n74\n26\n76\n7\n118\n99\n40\n52\n70\n85\n24\n28\n27\n49\n20\n41\n81\n109\n125\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          }
+        ],
+        "median_seconds": 0.39497516800020094,
+        "memory_peak_mib": 8.13671875,
+        "memory_metric": "cgroup v2 memory.peak (includes descendants, cache and tmpfs; not RSS)"
+      },
+      "team": {
+        "status": "OK",
+        "runs": [
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.0582379569996192,
+            "memory_peak_mib": 6.87109375,
+            "peak_rss_mib": 15.51171875,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "73\n44\n23\n102\n49\n11\n77\n75\n27\n37\n37\n24\n59\n77\n59\n16\n83\n89\n41\n27\n59\n95\n76\n116\n72\n76\n16\n43\n18\n19\n41\n79\n85\n16\n114\n35\n24\n71\n14\n16\n31\n99\n72\n45\n16\n47\n105\n109\n58\n28\n90\n88\n40\n78\n21\n76\n98\n100\n59\n88\n20\n10\n17\n125\n25\n40\n47\n98\n15\n80\n86\n26\n48\n61\n90\n55\n30\n112\n88\n43\n39\n35\n85\n85\n71\n97\n132\n20\n14\n18\n18\n94\n104\n88\n29\n17\n37\n16\n115\n96\n33\n28\n89\n119\n89\n12\n144\n25\n36\n18\n49\n43\n15\n41\n3\n79\n33\n98\n49\n107\n18\n73\n60\n57\n69\n86\n52\n15\n9\n34\n25\n98\n65\n129\n85\n57\n96\n114\n13\n105\n98\n117\n39\n7\n97\n25\n62\n10\n17\n11\n79\n63\n25\n25\n13\n64\n17\n86\n47\n96\n70\n74\n26\n76\n7\n118\n99\n40\n52\n70\n85\n24\n28\n27\n49\n20\n41\n81\n109\n125\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.039647486999456305,
+            "memory_peak_mib": 6.8515625,
+            "peak_rss_mib": 15.515625,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "73\n44\n23\n102\n49\n11\n77\n75\n27\n37\n37\n24\n59\n77\n59\n16\n83\n89\n41\n27\n59\n95\n76\n116\n72\n76\n16\n43\n18\n19\n41\n79\n85\n16\n114\n35\n24\n71\n14\n16\n31\n99\n72\n45\n16\n47\n105\n109\n58\n28\n90\n88\n40\n78\n21\n76\n98\n100\n59\n88\n20\n10\n17\n125\n25\n40\n47\n98\n15\n80\n86\n26\n48\n61\n90\n55\n30\n112\n88\n43\n39\n35\n85\n85\n71\n97\n132\n20\n14\n18\n18\n94\n104\n88\n29\n17\n37\n16\n115\n96\n33\n28\n89\n119\n89\n12\n144\n25\n36\n18\n49\n43\n15\n41\n3\n79\n33\n98\n49\n107\n18\n73\n60\n57\n69\n86\n52\n15\n9\n34\n25\n98\n65\n129\n85\n57\n96\n114\n13\n105\n98\n117\n39\n7\n97\n25\n62\n10\n17\n11\n79\n63\n25\n25\n13\n64\n17\n86\n47\n96\n70\n74\n26\n76\n7\n118\n99\n40\n52\n70\n85\n24\n28\n27\n49\n20\n41\n81\n109\n125\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.06819449700014957,
+            "memory_peak_mib": 6.8828125,
+            "peak_rss_mib": 15.515625,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "73\n44\n23\n102\n49\n11\n77\n75\n27\n37\n37\n24\n59\n77\n59\n16\n83\n89\n41\n27\n59\n95\n76\n116\n72\n76\n16\n43\n18\n19\n41\n79\n85\n16\n114\n35\n24\n71\n14\n16\n31\n99\n72\n45\n16\n47\n105\n109\n58\n28\n90\n88\n40\n78\n21\n76\n98\n100\n59\n88\n20\n10\n17\n125\n25\n40\n47\n98\n15\n80\n86\n26\n48\n61\n90\n55\n30\n112\n88\n43\n39\n35\n85\n85\n71\n97\n132\n20\n14\n18\n18\n94\n104\n88\n29\n17\n37\n16\n115\n96\n33\n28\n89\n119\n89\n12\n144\n25\n36\n18\n49\n43\n15\n41\n3\n79\n33\n98\n49\n107\n18\n73\n60\n57\n69\n86\n52\n15\n9\n34\n25\n98\n65\n129\n85\n57\n96\n114\n13\n105\n98\n117\n39\n7\n97\n25\n62\n10\n17\n11\n79\n63\n25\n25\n13\n64\n17\n86\n47\n96\n70\n74\n26\n76\n7\n118\n99\n40\n52\n70\n85\n24\n28\n27\n49\n20\n41\n81\n109\n125\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.0868507730001511,
+            "memory_peak_mib": 6.64453125,
+            "peak_rss_mib": 15.51953125,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "73\n44\n23\n102\n49\n11\n77\n75\n27\n37\n37\n24\n59\n77\n59\n16\n83\n89\n41\n27\n59\n95\n76\n116\n72\n76\n16\n43\n18\n19\n41\n79\n85\n16\n114\n35\n24\n71\n14\n16\n31\n99\n72\n45\n16\n47\n105\n109\n58\n28\n90\n88\n40\n78\n21\n76\n98\n100\n59\n88\n20\n10\n17\n125\n25\n40\n47\n98\n15\n80\n86\n26\n48\n61\n90\n55\n30\n112\n88\n43\n39\n35\n85\n85\n71\n97\n132\n20\n14\n18\n18\n94\n104\n88\n29\n17\n37\n16\n115\n96\n33\n28\n89\n119\n89\n12\n144\n25\n36\n18\n49\n43\n15\n41\n3\n79\n33\n98\n49\n107\n18\n73\n60\n57\n69\n86\n52\n15\n9\n34\n25\n98\n65\n129\n85\n57\n96\n114\n13\n105\n98\n117\n39\n7\n97\n25\n62\n10\n17\n11\n79\n63\n25\n25\n13\n64\n17\n86\n47\n96\n70\n74\n26\n76\n7\n118\n99\n40\n52\n70\n85\n24\n28\n27\n49\n20\n41\n81\n109\n125\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.06558542099992337,
+            "memory_peak_mib": 7.1015625,
+            "peak_rss_mib": 15.53515625,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "73\n44\n23\n102\n49\n11\n77\n75\n27\n37\n37\n24\n59\n77\n59\n16\n83\n89\n41\n27\n59\n95\n76\n116\n72\n76\n16\n43\n18\n19\n41\n79\n85\n16\n114\n35\n24\n71\n14\n16\n31\n99\n72\n45\n16\n47\n105\n109\n58\n28\n90\n88\n40\n78\n21\n76\n98\n100\n59\n88\n20\n10\n17\n125\n25\n40\n47\n98\n15\n80\n86\n26\n48\n61\n90\n55\n30\n112\n88\n43\n39\n35\n85\n85\n71\n97\n132\n20\n14\n18\n18\n94\n104\n88\n29\n17\n37\n16\n115\n96\n33\n28\n89\n119\n89\n12\n144\n25\n36\n18\n49\n43\n15\n41\n3\n79\n33\n98\n49\n107\n18\n73\n60\n57\n69\n86\n52\n15\n9\n34\n25\n98\n65\n129\n85\n57\n96\n114\n13\n105\n98\n117\n39\n7\n97\n25\n62\n10\n17\n11\n79\n63\n25\n25\n13\n64\n17\n86\n47\n96\n70\n74\n26\n76\n7\n118\n99\n40\n52\n70\n85\n24\n28\n27\n49\n20\n41\n81\n109\n125\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          }
+        ],
+        "median_seconds": 0.06558542099992337,
+        "memory_peak_mib": 7.1015625,
+        "memory_metric": "cgroup v2 memory.peak (includes descendants, cache and tmpfs; not RSS)"
+      },
+      "speedup": 6.02230132822754
+    },
+    {
+      "dataset_id": "mock_maze",
+      "dataset": "/home/yoshiko/.codex/worktrees/mock-stress/RoboRoute_Challenge_Public/datasets/mock_maze",
+      "sha256": {
+        "map.csv": "6ef566638bbbccafbd595657217df9da400b885e3286222b9fc92bee2d270f97",
+        "queries.csv": "aed7d9ceb1568213c4ffcdeae73cb3b735e592bef66f7c7c26caa9d8073e49c7",
+        "metadata.json": "3c01504659f08ee7f259d7ef965d81bfc43d9c22dca1107c714e3e3ca84f0a38"
+      },
+      "baseline": {
+        "status": "OK",
+        "runs": [
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.40017315199929726,
+            "memory_peak_mib": 8.41796875,
+            "peak_rss_mib": 15.66015625,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "705\n980\n699\n392\n1417\n493\n1291\n1528\n910\n562\n1618\n830\n1015\n1815\n1014\n418\n580\n611\n735\n1677\n546\n816\n1253\n1299\n259\n1159\n1259\n1068\n892\n1203\n1061\n307\n1033\n718\n1323\n559\n1090\n354\n403\n243\n964\n1366\n1252\n601\n766\n858\n1154\n786\n1440\n1067\n1268\n538\n577\n848\n644\n628\n1580\n607\n1437\n517\n453\n1221\n880\n1401\n432\n1195\n437\n614\n767\n598\n1746\n985\n287\n503\n880\n799\n886\n1277\n804\n1292\n165\n523\n867\n413\n830\n1254\n793\n1076\n709\n767\n443\n676\n1109\n458\n998\n1742\n105\n934\n1304\n996\n1428\n852\n292\n1295\n674\n558\n317\n1401\n947\n1395\n800\n906\n771\n407\n1224\n236\n1355\n804\n628\n327\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.4241515880003135,
+            "memory_peak_mib": 8.171875,
+            "peak_rss_mib": 15.6640625,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "705\n980\n699\n392\n1417\n493\n1291\n1528\n910\n562\n1618\n830\n1015\n1815\n1014\n418\n580\n611\n735\n1677\n546\n816\n1253\n1299\n259\n1159\n1259\n1068\n892\n1203\n1061\n307\n1033\n718\n1323\n559\n1090\n354\n403\n243\n964\n1366\n1252\n601\n766\n858\n1154\n786\n1440\n1067\n1268\n538\n577\n848\n644\n628\n1580\n607\n1437\n517\n453\n1221\n880\n1401\n432\n1195\n437\n614\n767\n598\n1746\n985\n287\n503\n880\n799\n886\n1277\n804\n1292\n165\n523\n867\n413\n830\n1254\n793\n1076\n709\n767\n443\n676\n1109\n458\n998\n1742\n105\n934\n1304\n996\n1428\n852\n292\n1295\n674\n558\n317\n1401\n947\n1395\n800\n906\n771\n407\n1224\n236\n1355\n804\n628\n327\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.42089523899994674,
+            "memory_peak_mib": 8.26953125,
+            "peak_rss_mib": 15.67578125,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "705\n980\n699\n392\n1417\n493\n1291\n1528\n910\n562\n1618\n830\n1015\n1815\n1014\n418\n580\n611\n735\n1677\n546\n816\n1253\n1299\n259\n1159\n1259\n1068\n892\n1203\n1061\n307\n1033\n718\n1323\n559\n1090\n354\n403\n243\n964\n1366\n1252\n601\n766\n858\n1154\n786\n1440\n1067\n1268\n538\n577\n848\n644\n628\n1580\n607\n1437\n517\n453\n1221\n880\n1401\n432\n1195\n437\n614\n767\n598\n1746\n985\n287\n503\n880\n799\n886\n1277\n804\n1292\n165\n523\n867\n413\n830\n1254\n793\n1076\n709\n767\n443\n676\n1109\n458\n998\n1742\n105\n934\n1304\n996\n1428\n852\n292\n1295\n674\n558\n317\n1401\n947\n1395\n800\n906\n771\n407\n1224\n236\n1355\n804\n628\n327\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.4492385519997697,
+            "memory_peak_mib": 8.44140625,
+            "peak_rss_mib": 15.68359375,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "705\n980\n699\n392\n1417\n493\n1291\n1528\n910\n562\n1618\n830\n1015\n1815\n1014\n418\n580\n611\n735\n1677\n546\n816\n1253\n1299\n259\n1159\n1259\n1068\n892\n1203\n1061\n307\n1033\n718\n1323\n559\n1090\n354\n403\n243\n964\n1366\n1252\n601\n766\n858\n1154\n786\n1440\n1067\n1268\n538\n577\n848\n644\n628\n1580\n607\n1437\n517\n453\n1221\n880\n1401\n432\n1195\n437\n614\n767\n598\n1746\n985\n287\n503\n880\n799\n886\n1277\n804\n1292\n165\n523\n867\n413\n830\n1254\n793\n1076\n709\n767\n443\n676\n1109\n458\n998\n1742\n105\n934\n1304\n996\n1428\n852\n292\n1295\n674\n558\n317\n1401\n947\n1395\n800\n906\n771\n407\n1224\n236\n1355\n804\n628\n327\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.47212294500059215,
+            "memory_peak_mib": 8.03125,
+            "peak_rss_mib": 15.68359375,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "705\n980\n699\n392\n1417\n493\n1291\n1528\n910\n562\n1618\n830\n1015\n1815\n1014\n418\n580\n611\n735\n1677\n546\n816\n1253\n1299\n259\n1159\n1259\n1068\n892\n1203\n1061\n307\n1033\n718\n1323\n559\n1090\n354\n403\n243\n964\n1366\n1252\n601\n766\n858\n1154\n786\n1440\n1067\n1268\n538\n577\n848\n644\n628\n1580\n607\n1437\n517\n453\n1221\n880\n1401\n432\n1195\n437\n614\n767\n598\n1746\n985\n287\n503\n880\n799\n886\n1277\n804\n1292\n165\n523\n867\n413\n830\n1254\n793\n1076\n709\n767\n443\n676\n1109\n458\n998\n1742\n105\n934\n1304\n996\n1428\n852\n292\n1295\n674\n558\n317\n1401\n947\n1395\n800\n906\n771\n407\n1224\n236\n1355\n804\n628\n327\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          }
+        ],
+        "median_seconds": 0.4241515880003135,
+        "memory_peak_mib": 8.44140625,
+        "memory_metric": "cgroup v2 memory.peak (includes descendants, cache and tmpfs; not RSS)"
+      },
+      "team": {
+        "status": "OK",
+        "runs": [
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.07975023900053202,
+            "memory_peak_mib": 6.83984375,
+            "peak_rss_mib": 15.66015625,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "705\n980\n699\n392\n1417\n493\n1291\n1528\n910\n562\n1618\n830\n1015\n1815\n1014\n418\n580\n611\n735\n1677\n546\n816\n1253\n1299\n259\n1159\n1259\n1068\n892\n1203\n1061\n307\n1033\n718\n1323\n559\n1090\n354\n403\n243\n964\n1366\n1252\n601\n766\n858\n1154\n786\n1440\n1067\n1268\n538\n577\n848\n644\n628\n1580\n607\n1437\n517\n453\n1221\n880\n1401\n432\n1195\n437\n614\n767\n598\n1746\n985\n287\n503\n880\n799\n886\n1277\n804\n1292\n165\n523\n867\n413\n830\n1254\n793\n1076\n709\n767\n443\n676\n1109\n458\n998\n1742\n105\n934\n1304\n996\n1428\n852\n292\n1295\n674\n558\n317\n1401\n947\n1395\n800\n906\n771\n407\n1224\n236\n1355\n804\n628\n327\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.08154806099992129,
+            "memory_peak_mib": 6.98828125,
+            "peak_rss_mib": 15.66015625,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "705\n980\n699\n392\n1417\n493\n1291\n1528\n910\n562\n1618\n830\n1015\n1815\n1014\n418\n580\n611\n735\n1677\n546\n816\n1253\n1299\n259\n1159\n1259\n1068\n892\n1203\n1061\n307\n1033\n718\n1323\n559\n1090\n354\n403\n243\n964\n1366\n1252\n601\n766\n858\n1154\n786\n1440\n1067\n1268\n538\n577\n848\n644\n628\n1580\n607\n1437\n517\n453\n1221\n880\n1401\n432\n1195\n437\n614\n767\n598\n1746\n985\n287\n503\n880\n799\n886\n1277\n804\n1292\n165\n523\n867\n413\n830\n1254\n793\n1076\n709\n767\n443\n676\n1109\n458\n998\n1742\n105\n934\n1304\n996\n1428\n852\n292\n1295\n674\n558\n317\n1401\n947\n1395\n800\n906\n771\n407\n1224\n236\n1355\n804\n628\n327\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.10819177799930912,
+            "memory_peak_mib": 7.41015625,
+            "peak_rss_mib": 15.67578125,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "705\n980\n699\n392\n1417\n493\n1291\n1528\n910\n562\n1618\n830\n1015\n1815\n1014\n418\n580\n611\n735\n1677\n546\n816\n1253\n1299\n259\n1159\n1259\n1068\n892\n1203\n1061\n307\n1033\n718\n1323\n559\n1090\n354\n403\n243\n964\n1366\n1252\n601\n766\n858\n1154\n786\n1440\n1067\n1268\n538\n577\n848\n644\n628\n1580\n607\n1437\n517\n453\n1221\n880\n1401\n432\n1195\n437\n614\n767\n598\n1746\n985\n287\n503\n880\n799\n886\n1277\n804\n1292\n165\n523\n867\n413\n830\n1254\n793\n1076\n709\n767\n443\n676\n1109\n458\n998\n1742\n105\n934\n1304\n996\n1428\n852\n292\n1295\n674\n558\n317\n1401\n947\n1395\n800\n906\n771\n407\n1224\n236\n1355\n804\n628\n327\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.07591138200041314,
+            "memory_peak_mib": 6.90625,
+            "peak_rss_mib": 15.6796875,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "705\n980\n699\n392\n1417\n493\n1291\n1528\n910\n562\n1618\n830\n1015\n1815\n1014\n418\n580\n611\n735\n1677\n546\n816\n1253\n1299\n259\n1159\n1259\n1068\n892\n1203\n1061\n307\n1033\n718\n1323\n559\n1090\n354\n403\n243\n964\n1366\n1252\n601\n766\n858\n1154\n786\n1440\n1067\n1268\n538\n577\n848\n644\n628\n1580\n607\n1437\n517\n453\n1221\n880\n1401\n432\n1195\n437\n614\n767\n598\n1746\n985\n287\n503\n880\n799\n886\n1277\n804\n1292\n165\n523\n867\n413\n830\n1254\n793\n1076\n709\n767\n443\n676\n1109\n458\n998\n1742\n105\n934\n1304\n996\n1428\n852\n292\n1295\n674\n558\n317\n1401\n947\n1395\n800\n906\n771\n407\n1224\n236\n1355\n804\n628\n327\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.06999941100002616,
+            "memory_peak_mib": 6.95703125,
+            "peak_rss_mib": 15.68359375,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "705\n980\n699\n392\n1417\n493\n1291\n1528\n910\n562\n1618\n830\n1015\n1815\n1014\n418\n580\n611\n735\n1677\n546\n816\n1253\n1299\n259\n1159\n1259\n1068\n892\n1203\n1061\n307\n1033\n718\n1323\n559\n1090\n354\n403\n243\n964\n1366\n1252\n601\n766\n858\n1154\n786\n1440\n1067\n1268\n538\n577\n848\n644\n628\n1580\n607\n1437\n517\n453\n1221\n880\n1401\n432\n1195\n437\n614\n767\n598\n1746\n985\n287\n503\n880\n799\n886\n1277\n804\n1292\n165\n523\n867\n413\n830\n1254\n793\n1076\n709\n767\n443\n676\n1109\n458\n998\n1742\n105\n934\n1304\n996\n1428\n852\n292\n1295\n674\n558\n317\n1401\n947\n1395\n800\n906\n771\n407\n1224\n236\n1355\n804\n628\n327\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          }
+        ],
+        "median_seconds": 0.07975023900053202,
+        "memory_peak_mib": 7.41015625,
+        "memory_metric": "cgroup v2 memory.peak (includes descendants, cache and tmpfs; not RSS)"
+      },
+      "speedup": 5.318499271174397
+    },
+    {
+      "dataset_id": "mock_islands",
+      "dataset": "/home/yoshiko/.codex/worktrees/mock-stress/RoboRoute_Challenge_Public/datasets/mock_islands",
+      "sha256": {
+        "map.csv": "eb61c729d111f77e7e77159e366c453debcad7f6ee3e1b89a72b075348c6da53",
+        "queries.csv": "8d6a388b445d0ac18146bda197825e26d3d24f5f1cc681eeaf2f4de83a4a1a43",
+        "metadata.json": "85035c9607d05121e4216682dad25eedc4d2a8a765d6d0cea8403d26d242a5c0"
+      },
+      "baseline": {
+        "status": "OK",
+        "runs": [
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.21865121200062276,
+            "memory_peak_mib": 7.75390625,
+            "peak_rss_mib": 15.69140625,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "-1\n-1\n-1\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n98\n-1\n5\n-1\n19\n-1\n-1\n-1\n37\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n9\n-1\n-1\n-1\n-1\n32\n-1\n-1\n26\n-1\n-1\n-1\n-1\n-1\n18\n23\n30\n46\n-1\n-1\n-1\n49\n24\n-1\n-1\n-1\n-1\n-1\n7\n44\n-1\n-1\n-1\n-1\n3\n-1\n-1\n25\n-1\n-1\n-1\n81\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n4\n5\n-1\n-1\n-1\n8\n-1\n-1\n-1\n-1\n8\n-1\n-1\n-1\n2\n-1\n-1\n15\n-1\n-1\n-1\n33\n-1\n59\n21\n-1\n-1\n-1\n65\n83\n-1\n-1\n-1\n-1\n-1\n28\n-1\n-1\n-1\n-1\n17\n-1\n-1\n-1\n-1\n-1\n-1\n11\n-1\n-1\n-1\n-1\n-1\n40\n4\n18\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n30\n52\n-1\n-1\n36\n46\n-1\n104\n-1\n18\n-1\n-1\n-1\n-1\n-1\n26\n-1\n-1\n-1\n-1\n37\n-1\n-1\n-1\n36\n5\n17\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.2180984710003031,
+            "memory_peak_mib": 7.49609375,
+            "peak_rss_mib": 15.703125,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "-1\n-1\n-1\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n98\n-1\n5\n-1\n19\n-1\n-1\n-1\n37\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n9\n-1\n-1\n-1\n-1\n32\n-1\n-1\n26\n-1\n-1\n-1\n-1\n-1\n18\n23\n30\n46\n-1\n-1\n-1\n49\n24\n-1\n-1\n-1\n-1\n-1\n7\n44\n-1\n-1\n-1\n-1\n3\n-1\n-1\n25\n-1\n-1\n-1\n81\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n4\n5\n-1\n-1\n-1\n8\n-1\n-1\n-1\n-1\n8\n-1\n-1\n-1\n2\n-1\n-1\n15\n-1\n-1\n-1\n33\n-1\n59\n21\n-1\n-1\n-1\n65\n83\n-1\n-1\n-1\n-1\n-1\n28\n-1\n-1\n-1\n-1\n17\n-1\n-1\n-1\n-1\n-1\n-1\n11\n-1\n-1\n-1\n-1\n-1\n40\n4\n18\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n30\n52\n-1\n-1\n36\n46\n-1\n104\n-1\n18\n-1\n-1\n-1\n-1\n-1\n26\n-1\n-1\n-1\n-1\n37\n-1\n-1\n-1\n36\n5\n17\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.2179702379999071,
+            "memory_peak_mib": 7.50390625,
+            "peak_rss_mib": 15.703125,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "-1\n-1\n-1\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n98\n-1\n5\n-1\n19\n-1\n-1\n-1\n37\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n9\n-1\n-1\n-1\n-1\n32\n-1\n-1\n26\n-1\n-1\n-1\n-1\n-1\n18\n23\n30\n46\n-1\n-1\n-1\n49\n24\n-1\n-1\n-1\n-1\n-1\n7\n44\n-1\n-1\n-1\n-1\n3\n-1\n-1\n25\n-1\n-1\n-1\n81\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n4\n5\n-1\n-1\n-1\n8\n-1\n-1\n-1\n-1\n8\n-1\n-1\n-1\n2\n-1\n-1\n15\n-1\n-1\n-1\n33\n-1\n59\n21\n-1\n-1\n-1\n65\n83\n-1\n-1\n-1\n-1\n-1\n28\n-1\n-1\n-1\n-1\n17\n-1\n-1\n-1\n-1\n-1\n-1\n11\n-1\n-1\n-1\n-1\n-1\n40\n4\n18\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n30\n52\n-1\n-1\n36\n46\n-1\n104\n-1\n18\n-1\n-1\n-1\n-1\n-1\n26\n-1\n-1\n-1\n-1\n37\n-1\n-1\n-1\n36\n5\n17\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.23193025599994144,
+            "memory_peak_mib": 7.64453125,
+            "peak_rss_mib": 15.70703125,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "-1\n-1\n-1\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n98\n-1\n5\n-1\n19\n-1\n-1\n-1\n37\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n9\n-1\n-1\n-1\n-1\n32\n-1\n-1\n26\n-1\n-1\n-1\n-1\n-1\n18\n23\n30\n46\n-1\n-1\n-1\n49\n24\n-1\n-1\n-1\n-1\n-1\n7\n44\n-1\n-1\n-1\n-1\n3\n-1\n-1\n25\n-1\n-1\n-1\n81\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n4\n5\n-1\n-1\n-1\n8\n-1\n-1\n-1\n-1\n8\n-1\n-1\n-1\n2\n-1\n-1\n15\n-1\n-1\n-1\n33\n-1\n59\n21\n-1\n-1\n-1\n65\n83\n-1\n-1\n-1\n-1\n-1\n28\n-1\n-1\n-1\n-1\n17\n-1\n-1\n-1\n-1\n-1\n-1\n11\n-1\n-1\n-1\n-1\n-1\n40\n4\n18\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n30\n52\n-1\n-1\n36\n46\n-1\n104\n-1\n18\n-1\n-1\n-1\n-1\n-1\n26\n-1\n-1\n-1\n-1\n37\n-1\n-1\n-1\n36\n5\n17\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.24802241399993363,
+            "memory_peak_mib": 7.51171875,
+            "peak_rss_mib": 15.71484375,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "-1\n-1\n-1\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n98\n-1\n5\n-1\n19\n-1\n-1\n-1\n37\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n9\n-1\n-1\n-1\n-1\n32\n-1\n-1\n26\n-1\n-1\n-1\n-1\n-1\n18\n23\n30\n46\n-1\n-1\n-1\n49\n24\n-1\n-1\n-1\n-1\n-1\n7\n44\n-1\n-1\n-1\n-1\n3\n-1\n-1\n25\n-1\n-1\n-1\n81\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n4\n5\n-1\n-1\n-1\n8\n-1\n-1\n-1\n-1\n8\n-1\n-1\n-1\n2\n-1\n-1\n15\n-1\n-1\n-1\n33\n-1\n59\n21\n-1\n-1\n-1\n65\n83\n-1\n-1\n-1\n-1\n-1\n28\n-1\n-1\n-1\n-1\n17\n-1\n-1\n-1\n-1\n-1\n-1\n11\n-1\n-1\n-1\n-1\n-1\n40\n4\n18\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n30\n52\n-1\n-1\n36\n46\n-1\n104\n-1\n18\n-1\n-1\n-1\n-1\n-1\n26\n-1\n-1\n-1\n-1\n37\n-1\n-1\n-1\n36\n5\n17\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          }
+        ],
+        "median_seconds": 0.21865121200062276,
+        "memory_peak_mib": 7.75390625,
+        "memory_metric": "cgroup v2 memory.peak (includes descendants, cache and tmpfs; not RSS)"
+      },
+      "team": {
+        "status": "OK",
+        "runs": [
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.0625116209994303,
+            "memory_peak_mib": 7.02734375,
+            "peak_rss_mib": 15.703125,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "-1\n-1\n-1\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n98\n-1\n5\n-1\n19\n-1\n-1\n-1\n37\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n9\n-1\n-1\n-1\n-1\n32\n-1\n-1\n26\n-1\n-1\n-1\n-1\n-1\n18\n23\n30\n46\n-1\n-1\n-1\n49\n24\n-1\n-1\n-1\n-1\n-1\n7\n44\n-1\n-1\n-1\n-1\n3\n-1\n-1\n25\n-1\n-1\n-1\n81\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n4\n5\n-1\n-1\n-1\n8\n-1\n-1\n-1\n-1\n8\n-1\n-1\n-1\n2\n-1\n-1\n15\n-1\n-1\n-1\n33\n-1\n59\n21\n-1\n-1\n-1\n65\n83\n-1\n-1\n-1\n-1\n-1\n28\n-1\n-1\n-1\n-1\n17\n-1\n-1\n-1\n-1\n-1\n-1\n11\n-1\n-1\n-1\n-1\n-1\n40\n4\n18\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n30\n52\n-1\n-1\n36\n46\n-1\n104\n-1\n18\n-1\n-1\n-1\n-1\n-1\n26\n-1\n-1\n-1\n-1\n37\n-1\n-1\n-1\n36\n5\n17\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.06271479800034285,
+            "memory_peak_mib": 6.6171875,
+            "peak_rss_mib": 15.703125,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "-1\n-1\n-1\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n98\n-1\n5\n-1\n19\n-1\n-1\n-1\n37\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n9\n-1\n-1\n-1\n-1\n32\n-1\n-1\n26\n-1\n-1\n-1\n-1\n-1\n18\n23\n30\n46\n-1\n-1\n-1\n49\n24\n-1\n-1\n-1\n-1\n-1\n7\n44\n-1\n-1\n-1\n-1\n3\n-1\n-1\n25\n-1\n-1\n-1\n81\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n4\n5\n-1\n-1\n-1\n8\n-1\n-1\n-1\n-1\n8\n-1\n-1\n-1\n2\n-1\n-1\n15\n-1\n-1\n-1\n33\n-1\n59\n21\n-1\n-1\n-1\n65\n83\n-1\n-1\n-1\n-1\n-1\n28\n-1\n-1\n-1\n-1\n17\n-1\n-1\n-1\n-1\n-1\n-1\n11\n-1\n-1\n-1\n-1\n-1\n40\n4\n18\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n30\n52\n-1\n-1\n36\n46\n-1\n104\n-1\n18\n-1\n-1\n-1\n-1\n-1\n26\n-1\n-1\n-1\n-1\n37\n-1\n-1\n-1\n36\n5\n17\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.06590800400044827,
+            "memory_peak_mib": 6.71875,
+            "peak_rss_mib": 15.703125,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "-1\n-1\n-1\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n98\n-1\n5\n-1\n19\n-1\n-1\n-1\n37\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n9\n-1\n-1\n-1\n-1\n32\n-1\n-1\n26\n-1\n-1\n-1\n-1\n-1\n18\n23\n30\n46\n-1\n-1\n-1\n49\n24\n-1\n-1\n-1\n-1\n-1\n7\n44\n-1\n-1\n-1\n-1\n3\n-1\n-1\n25\n-1\n-1\n-1\n81\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n4\n5\n-1\n-1\n-1\n8\n-1\n-1\n-1\n-1\n8\n-1\n-1\n-1\n2\n-1\n-1\n15\n-1\n-1\n-1\n33\n-1\n59\n21\n-1\n-1\n-1\n65\n83\n-1\n-1\n-1\n-1\n-1\n28\n-1\n-1\n-1\n-1\n17\n-1\n-1\n-1\n-1\n-1\n-1\n11\n-1\n-1\n-1\n-1\n-1\n40\n4\n18\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n30\n52\n-1\n-1\n36\n46\n-1\n104\n-1\n18\n-1\n-1\n-1\n-1\n-1\n26\n-1\n-1\n-1\n-1\n37\n-1\n-1\n-1\n36\n5\n17\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.09492512899942085,
+            "memory_peak_mib": 6.9609375,
+            "peak_rss_mib": 15.703125,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "-1\n-1\n-1\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n98\n-1\n5\n-1\n19\n-1\n-1\n-1\n37\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n9\n-1\n-1\n-1\n-1\n32\n-1\n-1\n26\n-1\n-1\n-1\n-1\n-1\n18\n23\n30\n46\n-1\n-1\n-1\n49\n24\n-1\n-1\n-1\n-1\n-1\n7\n44\n-1\n-1\n-1\n-1\n3\n-1\n-1\n25\n-1\n-1\n-1\n81\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n4\n5\n-1\n-1\n-1\n8\n-1\n-1\n-1\n-1\n8\n-1\n-1\n-1\n2\n-1\n-1\n15\n-1\n-1\n-1\n33\n-1\n59\n21\n-1\n-1\n-1\n65\n83\n-1\n-1\n-1\n-1\n-1\n28\n-1\n-1\n-1\n-1\n17\n-1\n-1\n-1\n-1\n-1\n-1\n11\n-1\n-1\n-1\n-1\n-1\n40\n4\n18\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n30\n52\n-1\n-1\n36\n46\n-1\n104\n-1\n18\n-1\n-1\n-1\n-1\n-1\n26\n-1\n-1\n-1\n-1\n37\n-1\n-1\n-1\n36\n5\n17\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          },
+          {
+            "status": "OK",
+            "elapsed_seconds": 0.07084191299964004,
+            "memory_peak_mib": 6.56640625,
+            "peak_rss_mib": 15.71484375,
+            "memory_limit_mib": 128,
+            "returncode": 0,
+            "stdout": "-1\n-1\n-1\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n98\n-1\n5\n-1\n19\n-1\n-1\n-1\n37\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n9\n-1\n-1\n-1\n-1\n32\n-1\n-1\n26\n-1\n-1\n-1\n-1\n-1\n18\n23\n30\n46\n-1\n-1\n-1\n49\n24\n-1\n-1\n-1\n-1\n-1\n7\n44\n-1\n-1\n-1\n-1\n3\n-1\n-1\n25\n-1\n-1\n-1\n81\n-1\n-1\n-1\n-1\n12\n-1\n-1\n-1\n4\n5\n-1\n-1\n-1\n8\n-1\n-1\n-1\n-1\n8\n-1\n-1\n-1\n2\n-1\n-1\n15\n-1\n-1\n-1\n33\n-1\n59\n21\n-1\n-1\n-1\n65\n83\n-1\n-1\n-1\n-1\n-1\n28\n-1\n-1\n-1\n-1\n17\n-1\n-1\n-1\n-1\n-1\n-1\n11\n-1\n-1\n-1\n-1\n-1\n40\n4\n18\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n-1\n30\n52\n-1\n-1\n36\n46\n-1\n104\n-1\n18\n-1\n-1\n-1\n-1\n-1\n26\n-1\n-1\n-1\n-1\n37\n-1\n-1\n-1\n36\n5\n17\n",
+            "stderr": "",
+            "memory_events": {
+              "low": 0,
+              "high": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_kill": 0,
+              "oom_group_kill": 0
+            },
+            "mechanism": "cgroup-v2+namespace",
+            "cgroup_diagnostics": null
+          }
+        ],
+        "median_seconds": 0.06590800400044827,
+        "memory_peak_mib": 7.02734375,
+        "memory_metric": "cgroup v2 memory.peak (includes descendants, cache and tmpfs; not RSS)"
+      },
+      "speedup": 3.3175213741738503
+    }
+  ],
+  "baseline_sha256": {
+    "roboroute/__init__.py": "934ba5a6ba7792eb70ee53a7de39d0d871c861169b073fb0eb5ea84e4169e43a",
+    "roboroute/dataset.py": "76a37423280f817f1e34947e62fceab01657b269f101d7f8bd730b6bf4b6b04b",
+    "roboroute/generator.py": "599824d8bece844179b4581ad0e4d6873bc4d2e2882be843d3ba3836aa70f8dc",
+    "roboroute/solver.py": "6edaa7fd96055b1f672805241c577f1ac185c25e9dcf2c654146d2c6cce31be8",
+    "roboroute/visualization.py": "ee5c23c3f4de192ee399e0071817e5b7192ddc8e0c1424168b953c096cb1ede2",
+    "solution/main.py": "e65f02560d2e6983e28b2c6109aaedf7ca6f7846eb0013dd7f181e08d2ba89bd"
+  }
+}

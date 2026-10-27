@@ -33,6 +33,8 @@ cd RoboRoute_Challenge_Public
 | `./rr bench` | practiceで基準と自分のプログラムを各5回測定 |
 | `./rr bench --dataset performance` | 公開の大規模データで測定 |
 | `./rr mock` | 公開の模擬本番3種類で測定 |
+| `./rr mock-stress --lite` | 2日目の公開ストレス6種類を短縮版で測定 |
+| `./rr mock-stress --full` | 2日目の公開ストレス6種類をすべて測定 |
 | `./rr pack --team team01 --slides slides.pdf` | 提出ZIPを作成して検査 |
 
 check・bench・showは`--dataset`で[公開データ](docs/DATASETS.md)を変更できます。
@@ -67,6 +69,8 @@ work/
 6. `./rr mock`で複数の条件を確認する。
 
 benchは各5回の中央値と、基準中央値÷自分の中央値の「高速化率」を表示します。各回の測定値はresults内のJSONへ保存されます。`--result`を省略すると毎回別名になります。同じコードでも時間は少し変動します。
+
+2日目は `./rr mock-stress --lite` で繰り返し確認し、最後に `./rr mock-stress --full` で6種類を確認できます。全種類が正解の場合だけ、高速化率の幾何平均を総合値として表示します。正式な180秒スループットの点数とは別の練習用評価です。[入力・集計方法・所要時間](docs/MOCK_STRESS.md)を参照してください。
 
 実行は128MiBのメモリ上限付きで隔離します。長いsystemd-runの入力は不要です。隔離が使えない場合は理由を表示して停止し、無制限の実行へ切り替えません。
 

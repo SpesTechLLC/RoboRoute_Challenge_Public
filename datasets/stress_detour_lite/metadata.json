@@ -1,0 +1,38 @@
+{
+  "format_version": 1,
+  "width": 181,
+  "height": 181,
+  "query_count": 20,
+  "seed": 2026102502,
+  "stress_lite": {
+    "version": 1,
+    "source_dataset": "stress_detour",
+    "source_sha256": {
+      "map.csv": "d2537a909367331b3015a82aeace95e4e8095581feb0296e5679f8251ba20c29",
+      "queries.csv": "8ba8d2741a7d4099fb1d4925e49fbc9a19d92bf8a5eec52a9b73afd59ce423c8",
+      "metadata.json": "f56d71951ab65582e5d4a63109b872e6c48c9a786d893c5c18102761f5be6fad"
+    },
+    "query_indices": [
+      36,
+      37,
+      54,
+      63,
+      76,
+      78,
+      96,
+      109,
+      117,
+      129,
+      144,
+      167,
+      190,
+      197,
+      226,
+      285,
+      364,
+      372,
+      405,
+      425
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+Running as unit: run-r0fedd2960cf9457aa93636ecf6796f59.service; invocation ID: 945b12cba2ab42638e79e21dfc81d5b5
+test_already_empty_does_not_wait (test_isolated_runner.DrainTests.test_already_empty_does_not_wait) ... ok
+test_cgroup_read_failure_is_not_success (test_isolated_runner.DrainTests.test_cgroup_read_failure_is_not_success) ... ok
+test_existing_failures_remain_enforced (test_isolated_runner.DrainTests.test_existing_failures_remain_enforced) ... ok
+test_operator_stop_also_limits_descendant_wait (test_isolated_runner.DrainTests.test_operator_stop_also_limits_descendant_wait) ... ok
+test_persistent_population_reaches_deadline_and_fails (test_isolated_runner.DrainTests.test_persistent_population_reaches_deadline_and_fails) ... ok
+test_snapshot_records_host_pid_state_and_cpu (test_isolated_runner.DrainTests.test_snapshot_records_host_pid_state_and_cpu) ... ok
+test_spurious_notification_does_not_end_wait (test_isolated_runner.DrainTests.test_spurious_notification_does_not_end_wait) ... ok
+test_transient_empty_procs_but_populated_events_drains (test_isolated_runner.DrainTests.test_transient_empty_procs_but_populated_events_drains) ... ok
+test_full_bubblewrap_bootstrap_and_pid_namespace_cleanup (test_isolated_runner_integration.LifecycleIntegrationTests.test_full_bubblewrap_bootstrap_and_pid_namespace_cleanup) ... ok
+test_memory_limit_and_oom_detection (test_isolated_runner_integration.LifecycleIntegrationTests.test_memory_limit_and_oom_detection) ... ok
+test_operator_stop_during_drain (test_isolated_runner_integration.LifecycleIntegrationTests.test_operator_stop_during_drain) ... ok
+test_output_limit (test_isolated_runner_integration.LifecycleIntegrationTests.test_output_limit) ... ok
+test_persistent_descendant_is_rejected_and_killed (test_isolated_runner_integration.LifecycleIntegrationTests.test_persistent_descendant_is_rejected_and_killed) ... ok
+test_transient_descendant_time_and_output_are_included (test_isolated_runner_integration.LifecycleIntegrationTests.test_transient_descendant_time_and_output_are_included) ... ok
+test_all_five_runs_must_pass_even_if_side_claims_ok (test_mock_stress.AggregateTests.test_all_five_runs_must_pass_even_if_side_claims_ok) ... ok
+test_any_one_bad_run_invalidates_both_aggregate_metrics (test_mock_stress.AggregateTests.test_any_one_bad_run_invalidates_both_aggregate_metrics) ... ok
+test_environment_failure_is_incomplete_not_invalid (test_mock_stress.AggregateTests.test_environment_failure_is_incomplete_not_invalid) ... ok
+test_geometric_mean_and_time_ratio_are_distinct (test_mock_stress.AggregateTests.test_geometric_mean_and_time_ratio_are_distinct) ... ok
+test_invalid_timings_do_not_produce_speedup (test_mock_stress.AggregateTests.test_invalid_timings_do_not_produce_speedup) ... ok
+test_missing_duplicate_or_bad_baseline_records_are_incomplete (test_mock_stress.AggregateTests.test_missing_duplicate_or_bad_baseline_records_are_incomplete) ... ok
+test_partial_runs_are_printable_and_unmeasured_peak_is_not_zero (test_mock_stress.AggregateTests.test_partial_runs_are_printable_and_unmeasured_peak_is_not_zero) ... ok
+test_both_modes_use_existing_work_and_save_json (test_mock_stress.CliTests.test_both_modes_use_existing_work_and_save_json) ... ok
+test_existing_mock_and_bench_routing_is_unchanged (test_mock_stress.CliTests.test_existing_mock_and_bench_routing_is_unchanged) ... ok
+test_failed_service_and_exceptions_save_incomplete (test_mock_stress.CliTests.test_failed_service_and_exceptions_save_incomplete) ... ok
+test_mode_is_explicit_and_mutually_exclusive (test_mock_stress.CliTests.test_mode_is_explicit_and_mutually_exclusive) ... ok
+test_service_forwarding_and_default_mode_filename (test_mock_stress.CliTests.test_service_forwarding_and_default_mode_filename) ... ok
+test_bootstrap_failure_and_operator_stop_are_incomplete (test_mock_stress.ReusedBenchmarkTests.test_bootstrap_failure_and_operator_stop_are_incomplete) ... ok
+test_participant_failures_still_measure_all_six (test_mock_stress.ReusedBenchmarkTests.test_participant_failures_still_measure_all_six) ... ok
+test_reuses_five_run_interleaving_and_128_mib (test_mock_stress.ReusedBenchmarkTests.test_reuses_five_run_interleaving_and_128_mib) ... ok
+test_all_structures_regenerate_and_agree_with_dijkstra (test_stress_dataset.StressDatasetTests.test_all_structures_regenerate_and_agree_with_dijkstra) ... ok
+test_calibration_changes_queries_before_size_and_stays_within_limits (test_stress_dataset.StressDatasetTests.test_calibration_changes_queries_before_size_and_stays_within_limits) ... ok
+test_detour_rejects_naive_manhattan_even_with_few_obstacles (test_stress_dataset.StressDatasetTests.test_detour_rejects_naive_manhattan_even_with_few_obstacles) ... ok
+test_incomplete_or_partial_results_are_not_calibration_evidence (test_stress_dataset.StressDatasetTests.test_incomplete_or_partial_results_are_not_calibration_evidence) ... ok
+test_no_overwrite (test_stress_dataset.StressDatasetTests.test_no_overwrite) ... ok
+test_only_public_generation_is_supported (test_stress_dataset.StressDatasetTests.test_only_public_generation_is_supported) ... ok
+test_all_six_are_byte_identical_maps_and_subsets_with_provenance (test_stress_lite.LiteDatasetTests.test_all_six_are_byte_identical_maps_and_subsets_with_provenance) ... ok
+test_query_distributions_keep_the_stress_features (test_stress_lite.LiteDatasetTests.test_query_distributions_keep_the_stress_features) ... ok
+test_sampling_is_deterministic_and_does_not_overwrite (test_stress_lite.LiteDatasetTests.test_sampling_is_deterministic_and_does_not_overwrite) ... ok
+
+----------------------------------------------------------------------
+Ran 38 tests in 5.189s
+
+OK
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 5.355s
+             CPU time consumed: 4.496s
+                   Memory peak: 29.5M (swap: 0B)

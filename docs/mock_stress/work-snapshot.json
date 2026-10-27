@@ -1,0 +1,19 @@
+{
+  "source": "/home/yoshiko/RoboRoute_Challenge_Public/work",
+  "sha256": {
+    "bitmap.py": "66ca3c46473518d4232eab40c445154f677b4d127b50979588fcc3e90023a737",
+    "connectivity.py": "c3718e82df0f9000e6e5950d095ff3555495eecf2a2f674315c9e7856bfd5336",
+    "core.py": "47bb6566fb04fec1515dd2afdb497dae43a8ea95385b53f0d1db65a0230e8dd8",
+    "core_alt.py": "7dd5a62b7b2dbb3ec8cc007e35913862c7be5f25be8fcc5ff277a51d701bd72d",
+    "main.py": "8fa25c878446650ff4ede43e89e02875e411f84d95e86ee07170d364315ad363",
+    "report/experiment_log.md": "c0c0010c9a82a804d7b6840d6d4f9f0a87b5db2e12c5e355259ba54735ea625a",
+    "roboroute/__init__.py": "934ba5a6ba7792eb70ee53a7de39d0d871c861169b073fb0eb5ea84e4169e43a",
+    "roboroute/dataset.py": "76a37423280f817f1e34947e62fceab01657b269f101d7f8bd730b6bf4b6b04b",
+    "roboroute/generator.py": "599824d8bece844179b4581ad0e4d6873bc4d2e2882be843d3ba3836aa70f8dc",
+    "roboroute/solver.py": "b6e221a1e41734248323abcd225d896a3aec26aade53aa61033ca3a7c58a02e2",
+    "roboroute/visualization.py": "ee5c23c3f4de192ee399e0071817e5b7192ddc8e0c1424168b953c096cb1ede2",
+    "search.py": "481844e3f463d803c27796c46ff054c040a6351082283bbc2bfcd01e694c0b09",
+    "solver.py": "9998501df0692da2a8111d4d371c3d0e57d39a128166b7d601051c63a3513466",
+    "visibility.py": "223004c9109d5e149221f9665b3c3f2d9d46c1b4317944a8f1e022b1ba5bb7d9"
+  }
+}
