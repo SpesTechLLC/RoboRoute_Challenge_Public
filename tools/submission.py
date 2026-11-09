@@ -1,12 +1,52 @@
 """Bounded ZIP extraction into a new directory. Never extractall untrusted input."""
+from contextlib import contextmanager
 from pathlib import Path, PurePosixPath
 import shutil
 import stat
 import struct
+import tempfile
 import zipfile
 
 MAX_FILES = 1024
 MAX_BYTES = 32 * 1024 * 1024
+MAX_DIRECTORY_BYTES = 256 * 1024
+
+
+def submission_path(name, seen):
+    """Validate the same member names during preflight and extraction."""
+    path = PurePosixPath(name)
+    normalized = str(path).casefold()
+    is_directory = name.endswith('/')
+    if (not name or '\\' in name or '\x00' in name or ':' in name
+            or path.is_absolute() or any(p in ('', '.', '..') for p in name.rstrip('/').split('/'))
+            or normalized in seen
+            or any(normalized.startswith(parent + '/') and not directory
+                   or parent.startswith(normalized + '/') and not is_directory
+                   for parent, directory in seen.items())):
+        raise ValueError(f'Unsafe ZIP entry: {name!r}')
+    seen[normalized] = is_directory
+    return path
+
+
+@contextmanager
+def validated_submission(output):
+    """Publish a ZIP only after the existing submission extractor accepts it."""
+    output = Path(output)
+    if output.exists() or output.is_symlink():
+        raise ValueError(f'{output} は既に存在します。--outputで別名を指定してください。')
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='.rr-pack-', dir=output.parent) as temporary:
+        archive = Path(temporary) / 'submission.zip'
+        with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as zipped:
+            yield zipped
+        extract_submission(archive, Path(temporary) / 'validated')
+        # Exclusive creation also protects files created after the initial check.
+        with output.open('xb') as target, archive.open('rb') as source:
+            try:
+                shutil.copyfileobj(source, target)
+            except BaseException:
+                output.unlink(missing_ok=True)
+                raise
 
 
 def extract_submission(archive, destination):
@@ -24,7 +64,7 @@ def extract_submission(archive, destination):
         raise ValueError('Missing ZIP end record.')
     _, disk, cd_disk, count_disk, count, cd_size, cd_offset, comment_size = struct.unpack_from('<4s4H2LH', tail, offset)
     if (disk or cd_disk or count_disk != count or count > MAX_FILES
-            or cd_size > 256 * 1024 or cd_offset == 0xffffffff
+            or cd_size > MAX_DIRECTORY_BYTES or cd_offset == 0xffffffff
             or len(tail) - offset != 22 + comment_size):
         raise ValueError('Unsupported or oversized ZIP directory.')
     destination = Path(destination)
@@ -34,20 +74,17 @@ def extract_submission(archive, destination):
             entries = zipped.infolist()
             if len(entries) > MAX_FILES or sum(e.file_size for e in entries) > MAX_BYTES:
                 raise ValueError('ZIP exceeds submission size/file count limits.')
-            seen = set()
+            seen = {}
             for info in entries:
                 name = info.filename
-                path = PurePosixPath(name)
+                path = submission_path(name, seen)
                 mode = info.external_attr >> 16
-                if (info.orig_filename != name or not name or '\\' in name or '\x00' in name or ':' in name
-                        or path.is_absolute() or any(p in ('', '.', '..') for p in name.rstrip('/').split('/'))
-                        or str(path).casefold() in seen
+                if (info.orig_filename != name
                         or (stat.S_IFMT(mode) not in (0, stat.S_IFREG, stat.S_IFDIR))
                         or (stat.S_ISDIR(mode) and not info.is_dir())
                         or info.flag_bits & 1
                         or info.compress_type not in (zipfile.ZIP_STORED, zipfile.ZIP_DEFLATED)):
                     raise ValueError(f'Unsafe ZIP entry: {name!r}')
-                seen.add(str(path).casefold())
                 target = destination.joinpath(*path.parts)
                 if info.is_dir():
                     target.mkdir(parents=True, exist_ok=True)

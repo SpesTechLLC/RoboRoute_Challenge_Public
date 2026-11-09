@@ -18,7 +18,8 @@ from tools.benchmark import ROOT, evaluate, fingerprint
 from tools.isolated_runner import EnvironmentUnavailable, delegated_parent, run_isolated
 from tools.mock_stress import display_stress, evaluate_stress, summarize
 from tools.reference_solver import solve_dataset
-from tools.submission import extract_submission, MAX_BYTES, MAX_FILES
+from tools.submission import MAX_BYTES, MAX_FILES, validated_submission
+from tools.submit import check_submission, display_submission_check, submit
 
 MOCK_DATASETS = ('mock_rooms', 'mock_maze', 'mock_islands')
 
@@ -86,22 +87,9 @@ def pack_submission(work, team, slides, output=None):
     if len(files) > MAX_FILES or sum(path.stat().st_size for path, _ in files) > MAX_BYTES:
         raise ValueError('提出物は1024ファイル・展開後32MiB以内にしてください。')
     output = Path(output) if output else ROOT / 'submissions' / (team + '.zip')
-    output.parent.mkdir(parents=True, exist_ok=True)
-    if output.exists() or output.is_symlink():
-        raise ValueError(f'{output} は既に存在します。--outputで別名を指定してください。')
-    with tempfile.TemporaryDirectory(prefix='.rr-pack-', dir=output.parent) as temporary:
-        archive = Path(temporary) / 'submission.zip'
-        with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as zipped:
-            for path, name in files:
-                zipped.write(path, name)
-        extract_submission(archive, Path(temporary) / 'validated')
-        # Exclusive creation protects an already-produced archive, including races.
-        with output.open('xb') as target, archive.open('rb') as source:
-            try:
-                shutil.copyfileobj(source, target)
-            except BaseException:
-                output.unlink(missing_ok=True)
-                raise
+    with validated_submission(output) as zipped:
+        for path, name in files:
+            zipped.write(path, name)
     return output
 
 
@@ -190,6 +178,12 @@ def main(argv=None):
     pack.add_argument('--team', required=True)
     pack.add_argument('--slides', type=Path, required=True)
     pack.add_argument('--output', type=Path)
+    submission = commands.add_parser('submit', help='現在のworkを検査して提出ZIPを作成')
+    submission.add_argument('--check', action='store_true', help='ファイルを変更せず事前検査だけ行う')
+    submission.add_argument('--work', type=Path, default=ROOT / 'work')
+    submission.add_argument('--slides', type=Path, default=ROOT / 'slides.pdf')
+    submission.add_argument('--team', help='出力ファイル名の先頭に付けるチーム名（任意）')
+    submission.add_argument('--output', type=Path, help='出力先（既存ファイルは上書きしません）')
     args = parser.parse_args(arguments)
     try:
         if args.command == 'init':
@@ -206,6 +200,20 @@ def main(argv=None):
         if args.command == 'pack':
             output = pack_submission(args.work, args.team, args.slides, args.output)
             print(f'ZIP作成・安全検査: OK\n提出ファイル: {output}')
+            return 0
+        if args.command == 'submit':
+            if args.team is not None and not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,63}', args.team):
+                raise ValueError('チーム名は英数字で始まる英数字・_・-の1～64文字です。')
+            result = check_submission(args.work, args.slides)
+            display_submission_check(result)
+            if not result.ok:
+                return 1
+            if not args.check:
+                output = args.output or ROOT / 'submissions' / (
+                    (args.team or 'submission') + '-' + datetime.now().strftime('%Y%m%d-%H%M%S')
+                    + f'-{time.time_ns() % 1000000000:09d}.zip')
+                submit(result, output)
+                print(f'[PASS] ZIP生成後の形式検査（既存の提出検証器）\n提出ファイル: {output.resolve()}')
             return 0
         # Resolve user paths before the worker changes working directory.
         args.work = args.work.resolve()
@@ -270,7 +278,7 @@ def main(argv=None):
                 summarize(result, args.mode)
                 display_stress(result)
             args.result.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-        print(f'ERROR: {error}', file=sys.stderr)
+        print(f'{"[FAIL]" if args.command == "submit" else "ERROR:"} {error}', file=sys.stderr)
         if isinstance(error, EnvironmentUnavailable):
             print('通常WSLのユーザーsystemd・cgroup・bubblewrapを確認してください。隔離なしでは実行しません。', file=sys.stderr)
         return 2
