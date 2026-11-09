@@ -18,7 +18,6 @@ from tools.benchmark import ROOT, evaluate, fingerprint
 from tools.isolated_runner import EnvironmentUnavailable, delegated_parent, run_isolated
 from tools.mock_stress import display_stress, evaluate_stress, summarize
 from tools.reference_solver import solve_dataset
-from tools.submission import MAX_BYTES, MAX_FILES, validated_submission
 from tools.submit import check_submission, display_submission_check, submit
 
 MOCK_DATASETS = ('mock_rooms', 'mock_maze', 'mock_islands')
@@ -52,45 +51,15 @@ def init_work(work):
     return work
 
 
-def _regular(path):
-    if path.is_symlink() or not path.is_file():
-        raise ValueError(f'通常ファイルが必要です（リンク不可）: {path}')
-    return path
-
-
-def pack_submission(work, team, slides, output=None):
+def pack_submission(work, team, slides=None, output=None):
+    """Legacy pack entry point using the same PDF-free format as submit."""
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,63}', team):
         raise ValueError('チーム名は英数字で始まる英数字・_・-の1～64文字です。')
-    work, slides = Path(work), _regular(Path(slides))
-    if work.is_symlink() or not work.is_dir():
-        raise ValueError('workディレクトリが必要です。先に ./rr init を実行してください。')
-    _regular(work / 'main.py')
-    report = next((work / 'report' / ('experiment_log' + ext) for ext in ('.md', '.txt')
-                   if (work / 'report' / ('experiment_log' + ext)).exists()), None)
-    if report is None:
-        raise ValueError('report/experiment_log.md または .txt が必要です。')
-    _regular(report)
-    if report.parent.is_symlink():
-        raise ValueError('reportディレクトリのリンクは使用できません。')
-    files = []
-    for path in sorted(work.rglob('*')):
-        relative = path.relative_to(work)
-        if any(part.startswith('.') or part == '__pycache__' for part in relative.parts):
-            continue
-        if path.is_symlink():
-            raise ValueError(f'リンクを含む作業はZIP化できません: {relative}')
-        if path.suffix == '.py' and 'report' not in relative.parts:
-            files.append((_regular(path), relative.as_posix()))
-    files += [(report, 'report/' + report.name), (slides, 'slides.pdf')]
-    if (work / 'README.md').exists():
-        files.append((_regular(work / 'README.md'), 'README.md'))
-    if len(files) > MAX_FILES or sum(path.stat().st_size for path, _ in files) > MAX_BYTES:
-        raise ValueError('提出物は1024ファイル・展開後32MiB以内にしてください。')
+    result = check_submission(work)
+    if not result.ok:
+        raise ValueError('\n'.join(message for level, message in result.checks if level == 'FAIL'))
     output = Path(output) if output else ROOT / 'submissions' / (team + '.zip')
-    with validated_submission(output) as zipped:
-        for path, name in files:
-            zipped.write(path, name)
-    return output
+    return submit(result, output)
 
 
 def _inside_delegation():
@@ -173,17 +142,17 @@ def main(argv=None):
     stress.add_argument('--result', type=Path)
     stress.add_argument('--safety-stop', type=float, help='1実行の運営上の安全停止秒数（停止時はINCOMPLETE）')
     stress.add_argument('--team')
-    pack = commands.add_parser('pack', help='新しい提出形式のZIPを作成・検査')
+    pack = commands.add_parser('pack', help='従来名でコード・レポートのZIPを作成（PDFは別途提出）')
     pack.add_argument('--work', type=Path, default=ROOT / 'work')
     pack.add_argument('--team', required=True)
-    pack.add_argument('--slides', type=Path, required=True)
+    pack.add_argument('--slides', type=Path, help='互換用。指定したPDFもZIPには含めません')
     pack.add_argument('--output', type=Path)
     submission = commands.add_parser('submit', help='現在のworkを検査して提出ZIPを作成')
     submission.add_argument('--check', action='store_true', help='ファイルを変更せず事前検査だけ行う')
     submission.add_argument('--work', type=Path, default=ROOT / 'work')
     slides = submission.add_mutually_exclusive_group()
-    slides.add_argument('--slides', type=Path, default=ROOT / 'slides.pdf')
-    slides.add_argument('--slides-separate', action='store_true', help='発表資料は別途提出し、ZIPに含めない')
+    slides.add_argument('--slides', type=Path, help='互換用。指定したPDFもZIPには含めません')
+    slides.add_argument('--slides-separate', action='store_true', help='互換用。省略時も発表資料PDFは別途提出')
     submission.add_argument('--team', help='出力ファイル名の先頭に付けるチーム名（任意）')
     submission.add_argument('--output', type=Path, help='出力先（既存ファイルは上書きしません）')
     args = parser.parse_args(arguments)
@@ -201,12 +170,12 @@ def main(argv=None):
             return subprocess.run(command).returncode
         if args.command == 'pack':
             output = pack_submission(args.work, args.team, args.slides, args.output)
-            print(f'ZIP作成・安全検査: OK\n提出ファイル: {output}')
+            print(f'ZIP作成・安全検査: OK（発表資料PDFは別途提出）\n提出ファイル: {output}')
             return 0
         if args.command == 'submit':
             if args.team is not None and not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,63}', args.team):
                 raise ValueError('チーム名は英数字で始まる英数字・_・-の1～64文字です。')
-            result = check_submission(args.work, args.slides, slides_separate=args.slides_separate)
+            result = check_submission(args.work)
             display_submission_check(result)
             if not result.ok:
                 return 1
@@ -215,8 +184,7 @@ def main(argv=None):
                     (args.team or 'submission') + '-' + datetime.now().strftime('%Y%m%d-%H%M%S')
                     + f'-{time.time_ns() % 1000000000:09d}.zip')
                 submit(result, output)
-                condition = '発表資料は別途提出' if args.slides_separate else '発表資料PDF同梱'
-                print(f'[PASS] ZIP生成後の形式検査（既存の提出検証器・{condition}）\n提出ファイル: {output.resolve()}')
+                print(f'[PASS] ZIP生成後の形式検査（既存の提出検証器・発表資料PDFは別途提出）\n提出ファイル: {output.resolve()}')
             return 0
         # Resolve user paths before the worker changes working directory.
         args.work = args.work.resolve()

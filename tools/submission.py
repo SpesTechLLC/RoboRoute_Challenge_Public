@@ -29,7 +29,7 @@ def submission_path(name, seen):
 
 
 @contextmanager
-def validated_submission(output, *, require_slides=True):
+def validated_submission(output, *, require_slides=False):
     """Publish a ZIP only after the existing submission extractor accepts it."""
     output = Path(output)
     if output.exists() or output.is_symlink():
@@ -49,8 +49,8 @@ def validated_submission(output, *, require_slides=True):
                 raise
 
 
-def extract_submission(archive, destination, *, require_slides=True):
-    """Require code/report and, by default, slides.pdf; allow explicit separate slides."""
+def extract_submission(archive, destination, *, require_slides=False):
+    """Require code/report. Presentation PDFs are received separately by default."""
     archive = Path(archive)
     if archive.stat().st_size > MAX_BYTES:
         raise ValueError('Compressed ZIP exceeds 32 MiB.')

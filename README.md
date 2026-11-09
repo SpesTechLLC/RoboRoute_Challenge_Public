@@ -37,7 +37,7 @@ cd RoboRoute_Challenge_Public
 | `./rr mock-stress --full` | 2日目の公開ストレス6種類をすべて測定 |
 | `./rr submit --check` | 提出前の構文・依存・構成・容量・収録一覧を検査（ZIPは作りません） |
 | `./rr submit` | 現在のworkから提出ZIPを作成・検査 |
-| `./rr pack --team team01 --slides slides.pdf` | 従来の提出ZIP作成コマンド |
+| `./rr pack --team team01` | 従来名でコード・レポートのZIPを作成（PDFは別途提出） |
 
 check・bench・showは`--dataset`で[公開データ](docs/DATASETS.md)を変更できます。
 
@@ -78,9 +78,9 @@ benchは各5回の中央値と、基準中央値÷自分の中央値の「高速
 
 ## レポートと提出
 
-レポートは`work/report/experiment_log.md`へ実験02、03…と追記します。[テンプレート](templates/experiment_log.md)を参照してください。TXTでも提出できます。レポートのPDF化は不要です。発表資料はPDFにします。
+レポートは`work/report/experiment_log.md`へ実験02、03…と追記します。[テンプレート](templates/experiment_log.md)を参照してください。TXTでも提出できます。レポートのPDF化は不要です。
 
-発表資料をリポジトリ直下の`slides.pdf`に保存し、次を実行します。
+正式な提出は、コード・実験レポートのZIPと、発表資料PDFの別送です。PDFはZIPに含めず、チーム名と対応付けて別途提出します。コード採点とPDFの受領確認は独立して扱います。次のコマンドだけでコード提出ZIPを作成できます。
 
 ```bash
 ./rr submit
@@ -94,12 +94,7 @@ benchは各5回の中央値と、基準中央値÷自分の中央値の「高速
 ./rr submit --check
 ```
 
-発表資料を別途提出する場合は、明示的に`--slides-separate`を指定します。この場合は`slides.pdf`をZIPに含めず、生成後もコード・レポートを必須として検査します。`--slides`とは同時に指定できません。通常の`submit`と従来の`pack`では引き続きPDF同梱が必須です。
-
-```bash
-./rr submit --check --slides-separate
-./rr submit --slides-separate
-```
+`slides.pdf`がなくても正常です。PDFが存在してもZIPに含めず、PDFの有無によるエラーやWARNは出しません。従来の`--slides-separate`は互換用として残っており、省略時と同じ動作です。
 
 結果は`PASS`（合格）、`WARN`（要確認）、`FAIL`（修正が必要）と収録ファイル一覧で表示します。必須ファイル、パス・構成、全Pythonソースの構文、静的importの依存先、ファイル数、展開後容量、圧縮後容量を検査します。圧縮後容量はZIPを作らず、圧縮データとZIPヘッダーの容量から計算します。FAILがあればZIPは作成しません。終了コードは合格・WARNのみなら0、事前検査のFAILは1、出力・引数・生成後の検査エラーは2です。
 
@@ -113,22 +108,21 @@ submission-日時-識別番号.zip
 ├── roboroute/                 # 使用する補助Pythonソース
 ├── report/
 │   └── experiment_log.md      # experiment_log.txtでも可
-├── slides.pdf
 └── README.md                 # 任意
 ```
 
-別の作業場所・発表資料・出力先を使う場合は指定できます。`--team`は任意で、指定すると日時付きファイル名の先頭にチーム名が付きます。チーム名は英数字で始まる英数字・_・-の1～64文字です。既存ファイルやリンクは上書きしません。`--output`で作ったZIPを再作成する場合は別名を指定します。
+別の作業場所・出力先を使う場合は指定できます。`--team`は任意で、指定すると日時付きファイル名の先頭にチーム名が付きます。チーム名は英数字で始まる英数字・_・-の1～64文字です。既存ファイルやリンクは上書きしません。`--output`で作ったZIPを再作成する場合は別名を指定します。
 
 ```bash
 ./rr submit --team team01
-./rr submit --work work --slides presentation.pdf --output submissions/team01-v2.zip
+./rr submit --work work --output submissions/team01-v2.zip
 ```
 
 圧縮・展開後とも32MiB以下、1024ファイル以下です。ZIPのディレクトリ情報は256KiB以下です。これ以外の個別ファイル容量制限はありません。必要な補助Pythonソースはwork内へ置いてください。READMEは任意です。
 
-収録するのは`work/`内のPythonソース、`work/report/experiment_log.md`（なければ`.txt`）、発表資料（ZIP内は常に`slides.pdf`）、任意の`work/README.md`です。隠しファイル・隠しディレクトリ、キャッシュ、仮想環境、`site-packages/`、`node_modules/`、`results/`、`logs/`・`log/`、`data/`・`datasets/`、`tests/`・`test/`、`build/`・`dist/`・`htmlcov/`、`submissions/`、テスト用ソース（`test_*.py`・`*_test.py`・`tests.py`・`conftest.py`）は除外します。レポートディレクトリの他のファイルや、CSV・ログ・測定JSON等も収録しません。補助モジュールは除外対象以外の場所へ置いてください。収録対象のシンボリックリンクはエラーになります。
+収録するのは`work/`内のPythonソース、`work/report/experiment_log.md`（なければ`.txt`）、任意の`work/README.md`です。PDF、隠しファイル・隠しディレクトリ、キャッシュ、仮想環境、`site-packages/`、`node_modules/`、`results/`、`logs/`・`log/`、`data/`・`datasets/`、`tests/`・`test/`、`build/`・`dist/`・`htmlcov/`、`submissions/`、テスト用ソース（`test_*.py`・`*_test.py`・`tests.py`・`conftest.py`）は除外します。レポートディレクトリの他のファイルや、CSV・ログ・測定JSON等も収録しません。補助モジュールは除外対象以外の場所へ置いてください。収録対象のシンボリックリンクはエラーになります。
 
-従来の`./rr pack --team team01 --slides slides.pdf`も引き続き使えます。ZIPを提出するので、GitHubへのpushは提出条件ではありません。
+従来の`pack`も`./rr pack --team team01`で同じPDFなしの提出形式を作成します（出力名は従来どおり`submissions/team01.zip`）。`submit`・`pack`の旧`--slides PATH`は互換用に受け付けますが、指定ファイルを読み込まず、同梱もしません。発表資料PDFは別途提出してください。ZIPを提出するので、GitHubへのpushは提出条件ではありません。
 
 ## ルールと評価
 

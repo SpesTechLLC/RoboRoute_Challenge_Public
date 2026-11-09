@@ -4,6 +4,7 @@ import hashlib
 import io
 import os
 from pathlib import Path
+import stat
 import subprocess
 import sys
 import tempfile
@@ -46,32 +47,34 @@ class SubmitTests(unittest.TestCase):
         return submission.check_submission(self.work, self.slides)
 
     def test_no_argument_submit_generates_existing_format_and_preserves_sources(self):
+        self.slides.unlink()
         self.write('README.md', '説明\n')
         self.write('helper.py', 'from collections import deque\n')
         before = snapshot(self.work)
-        slides_before = self.slides.read_bytes()
         with patch('tools.submission.extract_submission', wraps=extract_submission) as validator:
             code, output, error = self.cli()
         self.assertEqual((code, error), (0, ''))
+        self.assertNotIn('[WARN]', output)
         validator.assert_called_once()
         archives = list((self.root / 'submissions').glob('submission-*.zip'))
         self.assertEqual(len(archives), 1)
         self.assertIn(str(archives[0]), output)
         self.assertIn('ZIP生成後の形式検査', output)
         with zipfile.ZipFile(archives[0]) as zipped:
-            expected = {'main.py', 'helper.py', 'README.md', 'slides.pdf', 'report/experiment_log.md',
+            expected = {'main.py', 'helper.py', 'README.md', 'report/experiment_log.md',
                         'roboroute/__init__.py', 'roboroute/dataset.py', 'roboroute/generator.py',
                         'roboroute/solver.py', 'roboroute/visualization.py'}
             self.assertEqual(set(zipped.namelist()), expected)
-            for name in expected - {'slides.pdf'}:
+            for name in expected:
                 self.assertEqual(zipped.read(name), (self.work / name).read_bytes())
-            self.assertEqual(zipped.read('slides.pdf'), slides_before)
+            self.assertNotIn('slides.pdf', zipped.namelist())
         extracted = extract_submission(archives[0], self.root / 'extracted')
         self.assertTrue((extracted / 'main.py').is_file())
         self.assertEqual(snapshot(self.work), before)
-        self.assertEqual(self.slides.read_bytes(), slides_before)
+        self.assertFalse(self.slides.exists())
 
     def test_check_creates_nothing_even_with_explicit_output(self):
+        self.slides.unlink()
         existing = self.root / 'existing.zip'
         existing.write_bytes(b'keep existing archive')
         before = snapshot(self.root)
@@ -81,13 +84,14 @@ class SubmitTests(unittest.TestCase):
             code, output, error = self.cli('--check', '--output', existing)
         self.assertEqual((code, error), (0, ''))
         self.assertIn('[PASS]', output)
+        self.assertNotIn('[WARN]', output)
         self.assertIn('roboroute/solver.py', output)
         self.assertIn('ZIP容量', output)
         self.assertEqual(snapshot(self.root), before)
         self.assertEqual({str(path) for path in self.root.rglob('*')}, directories)
 
     def test_each_missing_required_file_fails_without_output(self):
-        for path in (self.work / 'main.py', self.work / 'report/experiment_log.md', self.slides):
+        for path in (self.work / 'main.py', self.work / 'report/experiment_log.md'):
             with self.subTest(path=path):
                 content = path.read_bytes()
                 path.unlink()
@@ -106,7 +110,8 @@ class SubmitTests(unittest.TestCase):
         before = snapshot(self.root)
         code, output, error = self.cli('--check', '--slides-separate')
         self.assertEqual((code, error), (0, ''))
-        self.assertIn('[WARN] 発表資料は別途提出', output)
+        self.assertNotIn('[WARN]', output)
+        self.assertEqual((code, output, error), self.cli('--check'))
         self.assertEqual(snapshot(self.root), before)
         self.assertFalse((self.root / 'submissions').exists())
 
@@ -122,9 +127,9 @@ class SubmitTests(unittest.TestCase):
             self.assertIn('main.py', zipped.namelist())
             self.assertIn('report/experiment_log.md', zipped.namelist())
             self.assertIsNone(zipped.testzip())
-        extract_submission(archive, self.root / 'separate', require_slides=False)
+        extract_submission(archive, self.root / 'separate')
         with self.assertRaisesRegex(ValueError, 'slides.pdf'):
-            extract_submission(archive, self.root / 'standard')
+            extract_submission(archive, self.root / 'legacy', require_slides=True)
         self.assertEqual(snapshot(self.work), before)
         self.assertEqual(self.slides.read_bytes(), original_slides)
 
@@ -145,6 +150,22 @@ class SubmitTests(unittest.TestCase):
         with self.assertRaises(SystemExit) as error:
             self.cli('--slides-separate', '--slides', self.slides)
         self.assertEqual(error.exception.code, 2)
+
+    def test_legacy_slides_paths_never_add_pdf_to_submit_or_pack(self):
+        self.write('slides.pdf', '%PDF-1.4\n')
+        self.write('nested/presentation.PDF', '%PDF-1.4\n')
+        for command in ('submit', 'pack'):
+            for pdf in (self.slides, self.root / 'absent.pdf'):
+                with self.subTest(command=command, pdf=pdf):
+                    output = self.root / f'{command}-{pdf.stem}.zip'
+                    arguments = [command, '--work', str(self.work), '--team', 'team01',
+                                 '--slides', str(pdf), '--output', str(output)]
+                    with redirect_stdout(io.StringIO()) as out, redirect_stderr(io.StringIO()) as err:
+                        code = rr_cli.main(arguments)
+                    self.assertEqual((code, err.getvalue()), (0, ''))
+                    self.assertNotIn('[WARN]', out.getvalue())
+                    with zipfile.ZipFile(output) as zipped:
+                        self.assertTrue(all(not name.lower().endswith('.pdf') for name in zipped.namelist()))
 
     def test_missing_work_has_init_guidance(self):
         code, output, _ = self.cli('--check', '--work', self.root / 'missing')
@@ -240,7 +261,7 @@ class SubmitTests(unittest.TestCase):
         self.assertTrue(self.check().ok)
 
     def test_unsafe_duplicate_and_file_directory_collisions_fail_preflight(self):
-        for name in ('MAIN.py', 'bad:name.py', 'slides.pdf/helper.py'):
+        for name in ('MAIN.py', 'bad:name.py'):
             with self.subTest(name=name):
                 path = self.write(name)
                 try:
@@ -271,7 +292,7 @@ class SubmitTests(unittest.TestCase):
         self.work = self.root / 'minimal'
         self.write('main.py', '')
         self.write('report/experiment_log.md', '')
-        self.slides.write_bytes(os.urandom(1024))
+        (self.work / 'report/experiment_log.md').write_bytes(os.urandom(1024))
         total = sum(file.size for file in self.check().files)
         with patch.object(submission, 'MAX_BYTES', total + 1):
             result = self.check()
@@ -350,6 +371,7 @@ class SubmitTests(unittest.TestCase):
 
     def test_existing_pack_and_new_submit_have_the_same_layout(self):
         self.write('helper.py')
+        self.write('results/generated.py', 'invalid python!')
         old = rr_cli.pack_submission(self.work, 'team01', self.slides, self.root / 'old.zip')
         new = submission.submit(self.check(), self.root / 'new.zip')
         with zipfile.ZipFile(old) as previous, zipfile.ZipFile(new) as current:
@@ -358,11 +380,14 @@ class SubmitTests(unittest.TestCase):
                 self.assertEqual(previous.read(name), current.read(name))
 
     def test_pack_entry_point_and_existing_init_still_work(self):
+        self.slides.unlink()
         output = self.root / 'packed.zip'
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
             code = rr_cli.main(['pack', '--work', str(self.work), '--team', 'team01',
-                                '--slides', str(self.slides), '--output', str(output)])
+                                '--output', str(output)])
         self.assertEqual(code, 0)
+        with zipfile.ZipFile(output) as zipped:
+            self.assertNotIn('slides.pdf', zipped.namelist())
         with self.assertRaises(ValueError):
             rr_cli.init_work(self.work)
 
@@ -382,10 +407,39 @@ class ExistingExtractorTests(unittest.TestCase):
             root = Path(temporary)
             archive = root / 'old.zip'
             with zipfile.ZipFile(archive, 'w') as zipped:
-                for name, content in [('main.py', 'pass'), ('slides.pdf', '%PDF'),
+                for name, content in [('main.py', 'pass'),
                                       ('report/', ''), ('report/experiment_log.txt', 'report')]:
                     zipped.writestr(name, content)
             self.assertTrue(extract_submission(archive, root / 'extracted').is_dir())
+
+    def test_code_and_report_remain_required_without_pdf(self):
+        for missing in ('main.py', 'report/experiment_log.md'):
+            with self.subTest(missing=missing), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                archive = root / 'missing.zip'
+                with zipfile.ZipFile(archive, 'w') as zipped:
+                    for name in ('main.py', 'report/experiment_log.md'):
+                        if name != missing:
+                            zipped.writestr(name, 'content')
+                with self.assertRaisesRegex(ValueError, 'Missing required ZIP file'):
+                    extract_submission(archive, root / 'extracted')
+                self.assertFalse((root / 'extracted').exists())
+
+    def test_unsafe_archives_are_still_rejected_without_pdf(self):
+        for unsafe in ('../escape.py', 'MAIN.py', 'main.py/helper.py', 'link.py'):
+            with self.subTest(unsafe=unsafe), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                archive = root / 'unsafe.zip'
+                with zipfile.ZipFile(archive, 'w') as zipped:
+                    zipped.writestr('main.py', 'pass')
+                    zipped.writestr('report/experiment_log.md', 'report')
+                    info = zipfile.ZipInfo(unsafe)
+                    if unsafe == 'link.py':
+                        info.external_attr = (stat.S_IFLNK | 0o777) << 16
+                    zipped.writestr(info, 'target')
+                with self.assertRaises(ValueError):
+                    extract_submission(archive, root / 'extracted')
+                self.assertFalse((root / 'extracted').exists())
 
 
 if __name__ == '__main__':
