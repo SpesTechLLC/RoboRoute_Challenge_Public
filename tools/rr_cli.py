@@ -181,7 +181,9 @@ def main(argv=None):
     submission = commands.add_parser('submit', help='現在のworkを検査して提出ZIPを作成')
     submission.add_argument('--check', action='store_true', help='ファイルを変更せず事前検査だけ行う')
     submission.add_argument('--work', type=Path, default=ROOT / 'work')
-    submission.add_argument('--slides', type=Path, default=ROOT / 'slides.pdf')
+    slides = submission.add_mutually_exclusive_group()
+    slides.add_argument('--slides', type=Path, default=ROOT / 'slides.pdf')
+    slides.add_argument('--slides-separate', action='store_true', help='発表資料は別途提出し、ZIPに含めない')
     submission.add_argument('--team', help='出力ファイル名の先頭に付けるチーム名（任意）')
     submission.add_argument('--output', type=Path, help='出力先（既存ファイルは上書きしません）')
     args = parser.parse_args(arguments)
@@ -204,7 +206,7 @@ def main(argv=None):
         if args.command == 'submit':
             if args.team is not None and not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,63}', args.team):
                 raise ValueError('チーム名は英数字で始まる英数字・_・-の1～64文字です。')
-            result = check_submission(args.work, args.slides)
+            result = check_submission(args.work, args.slides, slides_separate=args.slides_separate)
             display_submission_check(result)
             if not result.ok:
                 return 1
@@ -213,7 +215,8 @@ def main(argv=None):
                     (args.team or 'submission') + '-' + datetime.now().strftime('%Y%m%d-%H%M%S')
                     + f'-{time.time_ns() % 1000000000:09d}.zip')
                 submit(result, output)
-                print(f'[PASS] ZIP生成後の形式検査（既存の提出検証器）\n提出ファイル: {output.resolve()}')
+                condition = '発表資料は別途提出' if args.slides_separate else '発表資料PDF同梱'
+                print(f'[PASS] ZIP生成後の形式検査（既存の提出検証器・{condition}）\n提出ファイル: {output.resolve()}')
             return 0
         # Resolve user paths before the worker changes working directory.
         args.work = args.work.resolve()

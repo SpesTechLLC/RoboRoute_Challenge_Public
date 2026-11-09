@@ -37,6 +37,7 @@ class SubmissionCheck:
     files: list = field(default_factory=list)
     checks: list = field(default_factory=list)
     zip_bytes: int = 0
+    slides_separate: bool = False
 
     @property
     def ok(self):
@@ -70,7 +71,9 @@ def _candidates(work, slides):
                    if (work / 'report' / ('experiment_log' + suffix)).exists()
                    or (work / 'report' / ('experiment_log' + suffix)).is_symlink()),
                   work / 'report/experiment_log.md')
-    files += [(report, 'report/' + report.name), (slides, 'slides.pdf')]
+    files.append((report, 'report/' + report.name))
+    if slides is not None:
+        files.append((slides, 'slides.pdf'))
     readme = work / 'README.md'
     if readme.exists() or readme.is_symlink():
         files.append((readme, 'README.md'))
@@ -151,11 +154,11 @@ def _check_python(result):
         result.checks.append(('WARN', '動的import/コード実行は静的に保証できません: ' + '; '.join(dynamic)))
 
 
-def check_submission(work, slides):
+def check_submission(work, slides, *, slides_separate=False):
     """Check without writing a ZIP, extracting files, or running student code."""
-    result = SubmissionCheck()
+    result = SubmissionCheck(slides_separate=slides_separate)
     try:
-        candidates = _candidates(Path(work), Path(slides))
+        candidates = _candidates(Path(work), None if slides_separate else Path(slides))
     except (OSError, ValueError) as error:
         result.checks.append(('FAIL', f'提出ディレクトリ: {error}'))
         return result
@@ -168,7 +171,10 @@ def check_submission(work, slides):
         except (OSError, ValueError) as error:
             result.checks.append(('FAIL', f'提出ファイル {name}: {path}: {error}'))
     if result.ok:
-        result.checks.append(('PASS', '必須ファイル: main.py、report/experiment_log.md または .txt、slides.pdf'))
+        result.checks.append(('PASS', '必須ファイル: main.py、report/experiment_log.md または .txt'
+                              + ('' if slides_separate else '、slides.pdf')))
+    if slides_separate:
+        result.checks.append(('WARN', '発表資料は別途提出: ZIPにslides.pdfを含めず、コードとレポートを検査します。'))
     directory_bytes, seen = 0, {}
     valid_names = True
     try:
@@ -232,7 +238,7 @@ def display_submission_check(result):
 def submit(result, output):
     if not result.ok:
         raise ValueError('提出検査に失敗したためZIPを作成しません。')
-    with validated_submission(output) as zipped:
+    with validated_submission(output, require_slides=not result.slides_separate) as zipped:
         for file in result.files:
             zipped.writestr(file.name, file.content)
     return Path(output)

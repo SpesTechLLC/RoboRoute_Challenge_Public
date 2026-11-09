@@ -29,7 +29,7 @@ def submission_path(name, seen):
 
 
 @contextmanager
-def validated_submission(output):
+def validated_submission(output, *, require_slides=True):
     """Publish a ZIP only after the existing submission extractor accepts it."""
     output = Path(output)
     if output.exists() or output.is_symlink():
@@ -39,7 +39,7 @@ def validated_submission(output):
         archive = Path(temporary) / 'submission.zip'
         with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as zipped:
             yield zipped
-        extract_submission(archive, Path(temporary) / 'validated')
+        extract_submission(archive, Path(temporary) / 'validated', require_slides=require_slides)
         # Exclusive creation also protects files created after the initial check.
         with output.open('xb') as target, archive.open('rb') as source:
             try:
@@ -49,8 +49,8 @@ def validated_submission(output):
                 raise
 
 
-def extract_submission(archive, destination):
-    """Require main.py, report/experiment_log.md or .txt, and slides.pdf."""
+def extract_submission(archive, destination, *, require_slides=True):
+    """Require code/report and, by default, slides.pdf; allow explicit separate slides."""
     archive = Path(archive)
     if archive.stat().st_size > MAX_BYTES:
         raise ValueError('Compressed ZIP exceeds 32 MiB.')
@@ -98,7 +98,7 @@ def extract_submission(archive, destination):
                             if remaining < 0:
                                 raise ValueError('ZIP expanded beyond declared size.')
                             output.write(chunk)
-            for required in ('main.py', 'slides.pdf'):
+            for required in (('main.py', 'slides.pdf') if require_slides else ('main.py',)):
                 if not (destination / required).is_file():
                     raise ValueError(f'Missing required ZIP file: {required}')
             if not any((destination / 'report' / ('experiment_log' + suffix)).is_file() for suffix in ('.md', '.txt')):

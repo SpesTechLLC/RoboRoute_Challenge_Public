@@ -101,6 +101,51 @@ class SubmitTests(unittest.TestCase):
                 finally:
                     path.write_bytes(content)
 
+    def test_separate_slides_check_creates_nothing_without_pdf(self):
+        self.slides.unlink()
+        before = snapshot(self.root)
+        code, output, error = self.cli('--check', '--slides-separate')
+        self.assertEqual((code, error), (0, ''))
+        self.assertIn('[WARN] 発表資料は別途提出', output)
+        self.assertEqual(snapshot(self.root), before)
+        self.assertFalse((self.root / 'submissions').exists())
+
+    def test_separate_slides_archive_omits_existing_pdf_and_preserves_sources(self):
+        before = snapshot(self.work)
+        original_slides = self.slides.read_bytes()
+        code, output, error = self.cli('--slides-separate')
+        self.assertEqual((code, error), (0, ''))
+        self.assertIn('ZIP生成後の形式検査', output)
+        archive = next((self.root / 'submissions').glob('*.zip'))
+        with zipfile.ZipFile(archive) as zipped:
+            self.assertNotIn('slides.pdf', zipped.namelist())
+            self.assertIn('main.py', zipped.namelist())
+            self.assertIn('report/experiment_log.md', zipped.namelist())
+            self.assertIsNone(zipped.testzip())
+        extract_submission(archive, self.root / 'separate', require_slides=False)
+        with self.assertRaisesRegex(ValueError, 'slides.pdf'):
+            extract_submission(archive, self.root / 'standard')
+        self.assertEqual(snapshot(self.work), before)
+        self.assertEqual(self.slides.read_bytes(), original_slides)
+
+    def test_separate_slides_still_requires_code_and_report(self):
+        for path in (self.work / 'main.py', self.work / 'report/experiment_log.md'):
+            with self.subTest(path=path):
+                original = path.read_bytes()
+                path.unlink()
+                try:
+                    code, output, _ = self.cli('--slides-separate')
+                    self.assertEqual(code, 1)
+                    self.assertIn('[FAIL]', output)
+                    self.assertFalse((self.root / 'submissions').exists())
+                finally:
+                    path.write_bytes(original)
+
+    def test_separate_and_explicit_slides_options_are_mutually_exclusive(self):
+        with self.assertRaises(SystemExit) as error:
+            self.cli('--slides-separate', '--slides', self.slides)
+        self.assertEqual(error.exception.code, 2)
+
     def test_missing_work_has_init_guidance(self):
         code, output, _ = self.cli('--check', '--work', self.root / 'missing')
         self.assertEqual(code, 1)
@@ -248,9 +293,9 @@ class SubmitTests(unittest.TestCase):
         self.assertEqual(archive.stat().st_size, result.zip_bytes)
 
     def test_invalid_generated_zip_is_not_published(self):
-        def corrupt(archive, destination):
+        def corrupt(archive, destination, **kwargs):
             archive.write_bytes(b'invalid ZIP')
-            return extract_submission(archive, destination)
+            return extract_submission(archive, destination, **kwargs)
 
         with patch('tools.submission.extract_submission', side_effect=corrupt):
             code, _, error = self.cli()
@@ -267,8 +312,8 @@ class SubmitTests(unittest.TestCase):
         self.assertEqual(output.read_bytes(), b'original')
         output.unlink()
 
-        def race(archive, destination):
-            validated = extract_submission(archive, destination)
+        def race(archive, destination, **kwargs):
+            validated = extract_submission(archive, destination, **kwargs)
             output.write_bytes(b'racing writer')
             return validated
 

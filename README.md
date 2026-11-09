@@ -94,6 +94,13 @@ benchは各5回の中央値と、基準中央値÷自分の中央値の「高速
 ./rr submit --check
 ```
 
+発表資料を別途提出する場合は、明示的に`--slides-separate`を指定します。この場合は`slides.pdf`をZIPに含めず、生成後もコード・レポートを必須として検査します。`--slides`とは同時に指定できません。通常の`submit`と従来の`pack`では引き続きPDF同梱が必須です。
+
+```bash
+./rr submit --check --slides-separate
+./rr submit --slides-separate
+```
+
 結果は`PASS`（合格）、`WARN`（要確認）、`FAIL`（修正が必要）と収録ファイル一覧で表示します。必須ファイル、パス・構成、全Pythonソースの構文、静的importの依存先、ファイル数、展開後容量、圧縮後容量を検査します。圧縮後容量はZIPを作らず、圧縮データとZIPヘッダーの容量から計算します。FAILがあればZIPは作成しません。終了コードは合格・WARNのみなら0、事前検査のFAILは1、出力・引数・生成後の検査エラーは2です。
 
 Pythonソースは読み取るだけで、import・実行はしません。静的importは標準ライブラリか提出内のモジュールに限定します。動的importや`exec`等はWARNとなり、依存を完全には保証できません。正解判定や実行時の動作確認は、従来の`./rr check`・`./rr mock`等で行ってください。
