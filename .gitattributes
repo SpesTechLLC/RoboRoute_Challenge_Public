@@ -3,3 +3,6 @@
 datasets/stress_*/map.csv -text whitespace=cr-at-eol
 datasets/stress_*/queries.csv -text whitespace=cr-at-eol
 datasets/stress_*/metadata.json -text
+
+# Preserve the published final input bytes and their SHA-256 on Windows/Linux.
+datasets/final_practice/** -text whitespace=cr-at-eol

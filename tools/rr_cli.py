@@ -142,6 +142,21 @@ def main(argv=None):
     stress.add_argument('--result', type=Path)
     stress.add_argument('--safety-stop', type=float, help='1実行の運営上の安全停止秒数（停止時はINCOMPLETE）')
     stress.add_argument('--team')
+    final = commands.add_parser('mock-final', help='3日目形式の公開練習：180秒・地図単位±1・128MiB隔離')
+    final.add_argument('--work',type=Path,default=ROOT/'work')
+    final.add_argument('--family',choices=('all','open','detour','maze','disconnected','mixed'),default='all')
+    final.add_argument('--seconds',type=float,default=180,help='全体秒数。既定180、短い動作確認にも使用可')
+    final.add_argument('--result',type=Path)
+    final.add_argument('--team')
+    final.add_argument('--_run-id',dest='run_id',help=argparse.SUPPRESS)
+    full_check = commands.add_parser('check-final',help='公開練習の全地図を1回ずつ正誤確認（180秒採点とは別）')
+    full_check.add_argument('--work',type=Path,default=ROOT/'work')
+    full_check.add_argument('--family',choices=('all','open','detour','maze','disconnected','mixed'),default='all')
+    full_check.add_argument('--safety-stop',type=float,default=10,help='1地図の運営上の安全停止秒数（既定10）')
+    full_check.add_argument('--result',type=Path)
+    full_check.add_argument('--team')
+    full_check.add_argument('--_run-id',dest='run_id',help=argparse.SUPPRESS)
+    full_check.set_defaults(seconds=None)
     pack = commands.add_parser('pack', help='従来名でコード・レポートのZIPを作成（PDFは別途提出）')
     pack.add_argument('--work', type=Path, default=ROOT / 'work')
     pack.add_argument('--team', required=True)
@@ -157,6 +172,9 @@ def main(argv=None):
     submission.add_argument('--output', type=Path, help='出力先（既存ファイルは上書きしません）')
     args = parser.parse_args(arguments)
     try:
+        if args.command in ('mock-final','check-final'):
+            from tools.final_practice import run_command
+            return run_command(args,worker=args._worker,inside=_inside_delegation)
         if args.command == 'init':
             work = init_work(args.work)
             print(f'準備完了: {work}\n編集するファイル: {work / "main.py"}、{work / "roboroute"}\n次: ./rr show --query 10 → ./rr check → ./rr bench\nレポート: {work / "report/experiment_log.md"}')
@@ -241,6 +259,9 @@ def main(argv=None):
         print(f'結果JSON: {args.result}')
         return code
     except (EnvironmentUnavailable, OSError, ValueError, zipfile.BadZipFile) as error:
+        if args.command in ('mock-final','check-final'):
+            print('ERROR:',error,file=sys.stderr)
+            return 2
         if getattr(args, 'result', None) is not None:
             args.result.parent.mkdir(parents=True, exist_ok=True)
             result = {'schema_version': 2, 'kind': 'benchmark-measurement', 'status': 'INCOMPLETE',
